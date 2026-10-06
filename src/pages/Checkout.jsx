@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { CheckCircle } from 'lucide-react';
+import { API_URL } from '../config';
 
 const Checkout = () => {
   const { cart, getCartTotal, clearCart } = useCart();
@@ -47,7 +48,7 @@ const Checkout = () => {
         }))
       };
 
-      const res = await fetch('/api/orders', {
+      const res = await fetch(`${API_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderPayload)

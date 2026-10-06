@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { ArrowLeft, Save, Upload, X, Plus } from 'lucide-react';
+import { API_URL } from '../../config';
 
 const ProductForm = () => {
   const { id } = useParams();
@@ -29,7 +30,7 @@ const ProductForm = () => {
   useEffect(() => {
     const fetchFormData = async () => {
       try {
-        const catRes = await fetch('/api/categories');
+        const catRes = await fetch(`${API_URL}/api/categories`);
         if (catRes.ok) {
           const catData = await catRes.json();
           setCategories(catData);
@@ -39,7 +40,7 @@ const ProductForm = () => {
         }
 
         if (isEditMode) {
-          const res = await fetch(`/api/products/${id}`);
+          const res = await fetch(`${API_URL}/api/products/${id}`);
           if (!res.ok) throw new Error('Product not found');
           const data = await res.json();
           if (!data.features || data.features.length === 0) data.features = [''];
@@ -96,7 +97,7 @@ const ProductForm = () => {
     form.append('productId', formData.slug || 'temp-product');
 
     try {
-      const res = await fetch('/api/upload/image', {
+      const res = await fetch(`${API_URL}/api/upload/image`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -132,7 +133,7 @@ const ProductForm = () => {
     };
 
     try {
-      const url = isEditMode ? `/api/products/${id}` : '/api/products';
+      const url = isEditMode ? `${API_URL}/api/products/${id}` : `${API_URL}/api/products`;
       const method = isEditMode ? 'PUT' : 'POST';
 
       const res = await fetch(url, {

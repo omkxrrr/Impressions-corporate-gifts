@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Upload, FileType, CheckCircle, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Papa from 'papaparse'; // Needs npm install papaparse
+import { API_URL } from '../../config';
 
 const AdminImport = () => {
   const { token } = useAuth();
@@ -82,7 +83,7 @@ const AdminImport = () => {
     try {
       const productsToImport = validationResults.valid.map(v => v.data);
       
-      const res = await fetch('/api/products/bulk', {
+      const res = await fetch(`${API_URL}/api/products/bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

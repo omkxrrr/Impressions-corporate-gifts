@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, Search, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { API_URL } from '../../config';
 
 const AdminProducts = () => {
   const { token } = useAuth();
@@ -14,7 +15,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch(`${API_URL}/api/products`);
       if (!res.ok) throw new Error('Failed to fetch products');
       const data = await res.json();
       setProducts(data);
@@ -31,7 +32,7 @@ const AdminProducts = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`/api/products/${id}`, { 
+      const res = await fetch(`${API_URL}/api/products/${id}`, { 
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
