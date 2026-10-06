@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 import categoryRoutes from './routes/categories.js';
