@@ -40,7 +40,10 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => setCart([]);
 
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cart.reduce((total, item) => {
+      const activePrice = item.salePrice ? parseFloat(item.salePrice) : (item.price ? parseFloat(item.price) : 0);
+      return total + (activePrice * item.quantity);
+    }, 0);
   };
 
   const getCartCount = () => {

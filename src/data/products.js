@@ -2,135 +2,142 @@ export const products = [
   {
     id: 1,
     name: "Wireless Noise-Cancelling Headphones",
-    price: 14999,
-    oldPrice: 19999,
+    slug: "wireless-noise-cancelling-headphones",
     category: "Electronics",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
-    rating: 4.8,
-    stock: 15,
-    description: "Experience premium sound quality with our advanced noise-cancelling headphones. Features 30-hour battery life and quick charging."
+    shortDescription: "Premium sound with active noise cancellation.",
+    description: "Experience premium sound quality with our advanced noise-cancelling headphones. Features 30-hour battery life and quick charging. Ideal for executive corporate gifting.",
+    images: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80"
+    ],
+    features: [
+      "Active Noise Cancellation",
+      "30-Hour Battery Life",
+      "Bluetooth 5.0",
+      "Premium Carry Case included"
+    ]
   },
   {
     id: 2,
     name: "Minimalist Leather Watch",
-    price: 3499,
-    oldPrice: 4999,
+    slug: "minimalist-leather-watch",
     category: "Accessories",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
-    rating: 4.5,
-    stock: 25,
-    description: "Classic design meets modern functionality. Genuine leather strap with water-resistant stainless steel casing."
+    shortDescription: "Classic design meets modern functionality.",
+    description: "Genuine leather strap with water-resistant stainless steel casing. A timeless piece perfect for rewarding top employees or valued clients.",
+    images: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80"
+    ],
+    features: [
+      "Genuine Leather Strap",
+      "Water Resistant (5ATM)",
+      "Stainless Steel Casing",
+      "Custom Logo Engraving available"
+    ]
   },
   {
     id: 3,
     name: "Smart Fitness Tracker",
-    price: 2999,
-    oldPrice: 3999,
+    slug: "smart-fitness-tracker",
     category: "Electronics",
-    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=800&q=80",
-    rating: 4.3,
-    stock: 40,
-    description: "Track your steps, heart rate, and sleep patterns. IP68 water resistant with vibrant OLED display."
+    shortDescription: "Track your steps, heart rate, and sleep.",
+    description: "Keep health a priority with this sleek smart fitness tracker. IP68 water resistant with a vibrant OLED display. Great for corporate wellness programs.",
+    images: [
+      "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=800&q=80",
+      "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?w=800&q=80"
+    ],
+    features: [
+      "Heart Rate Monitor",
+      "Sleep Tracking",
+      "IP68 Water Resistance",
+      "OLED Touch Display"
+    ]
   },
   {
     id: 4,
-    name: "Ergonomic Office Chair",
-    price: 8999,
-    oldPrice: 12000,
-    category: "Furniture",
-    image: "https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=800&q=80",
-    rating: 4.7,
-    stock: 10,
-    description: "Work in comfort for hours. Features adjustable lumbar support, breathable mesh back, and 3D armrests."
+    name: "Premium Ceramic Coffee Mug",
+    slug: "premium-ceramic-coffee-mug",
+    category: "Home & Kitchen",
+    shortDescription: "Artisan-crafted ceramic mug.",
+    description: "Artisan-crafted ceramic mug perfect for your morning brew. Microwave and dishwasher safe. Ideal canvas for company branding.",
+    images: [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80"
+    ],
+    features: [
+      "High-Quality Ceramic",
+      "Microwave Safe",
+      "Dishwasher Safe",
+      "Perfect for Custom Branding"
+    ]
   },
   {
     id: 5,
-    name: "Premium Ceramic Coffee Mug",
-    price: 499,
-    oldPrice: 799,
-    category: "Home & Kitchen",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80",
-    rating: 4.6,
-    stock: 100,
-    description: "Artisan-crafted ceramic mug perfect for your morning brew. Microwave and dishwasher safe."
+    name: "Mechanical Gaming Keyboard",
+    slug: "mechanical-gaming-keyboard",
+    category: "Electronics",
+    shortDescription: "RGB backlit mechanical keyboard.",
+    description: "RGB backlit mechanical keyboard with responsive blue switches for the ultimate typing experience. Perfect desk accessory for tech-savvy clients.",
+    images: [
+      "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&q=80"
+    ],
+    features: [
+      "Blue Mechanical Switches",
+      "RGB Backlighting",
+      "Ergonomic Wrist Rest",
+      "Durable Build"
+    ]
   },
   {
     id: 6,
-    name: "Mechanical Gaming Keyboard",
-    price: 4599,
-    oldPrice: 5999,
+    name: "Portable Bluetooth Speaker",
+    slug: "portable-bluetooth-speaker",
     category: "Electronics",
-    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&q=80",
-    rating: 4.9,
-    stock: 18,
-    description: "RGB backlit mechanical keyboard with responsive blue switches for the ultimate typing and gaming experience."
+    shortDescription: "Compact size, massive sound.",
+    description: "Compact size, massive sound. Waterproof design with 12 hours of playtime for outdoor adventures or desk audio.",
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80"
+    ],
+    features: [
+      "360 Degree Sound",
+      "12-Hour Playtime",
+      "IPX7 Waterproof",
+      "Built-in Mic for Calls"
+    ]
   },
   {
     id: 7,
-    name: "Unisex Cotton T-Shirt",
-    price: 699,
-    oldPrice: 999,
-    category: "Clothing",
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
-    rating: 4.2,
-    stock: 50,
-    description: "Ultra-soft, breathable 100% organic cotton t-shirt. Perfect for everyday casual wear."
+    name: "Stainless Steel Water Bottle",
+    slug: "stainless-steel-water-bottle",
+    category: "Home & Kitchen",
+    shortDescription: "Double-walled vacuum insulated flask.",
+    description: "Double-walled vacuum insulated flask keeps drinks cold for 24 hours or hot for 12 hours. A classic corporate gift item.",
+    images: [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80"
+    ],
+    features: [
+      "Vacuum Insulated",
+      "BPA Free",
+      "Rust-proof Stainless Steel",
+      "Custom Laser Engraving Available"
+    ]
   },
   {
     id: 8,
-    name: "Yoga Mat with Alignment Lines",
-    price: 1299,
-    oldPrice: 1999,
-    category: "Sports",
-    image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&q=80",
-    rating: 4.7,
-    stock: 30,
-    description: "Non-slip eco-friendly TPE yoga mat with laser-engraved alignment lines to perfect your posture."
-  },
-  {
-    id: 9,
-    name: "Portable Bluetooth Speaker",
-    price: 2499,
-    oldPrice: 3499,
-    category: "Electronics",
-    image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80",
-    rating: 4.4,
-    stock: 22,
-    description: "Compact size, massive sound. Waterproof design with 12 hours of playtime for outdoor adventures."
-  },
-  {
-    id: 10,
-    name: "Stainless Steel Water Bottle",
-    price: 899,
-    oldPrice: 1299,
-    category: "Home & Kitchen",
-    image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80",
-    rating: 4.8,
-    stock: 60,
-    description: "Double-walled vacuum insulated flask keeps drinks cold for 24 hours or hot for 12 hours."
-  },
-  {
-    id: 11,
-    name: "Classic Aviator Sunglasses",
-    price: 1199,
-    oldPrice: 1899,
+    name: "Canvas Laptop Backpack",
+    slug: "canvas-laptop-backpack",
     category: "Accessories",
-    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80",
-    rating: 4.5,
-    stock: 45,
-    description: "UV400 protection with polarized lenses. Lightweight metal frame for comfortable all-day wear."
-  },
-  {
-    id: 12,
-    name: "Canvas Backpack",
-    price: 1899,
-    oldPrice: 2599,
-    category: "Accessories",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
-    rating: 4.6,
-    stock: 28,
-    description: "Durable water-resistant canvas backpack with dedicated laptop sleeve and multiple organization pockets."
+    shortDescription: "Durable water-resistant backpack.",
+    description: "Durable water-resistant canvas backpack with dedicated laptop sleeve and multiple organization pockets. Great for new employee onboarding kits.",
+    images: [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80"
+    ],
+    features: [
+      "Water-resistant Canvas",
+      "15-inch Laptop Sleeve",
+      "Ergonomic Padded Straps",
+      "Company Logo Embroidery Available"
+    ]
   }
 ];
 
-export const categories = ["Electronics", "Accessories", "Furniture", "Home & Kitchen", "Clothing", "Sports"];
+export const categories = ["Electronics", "Accessories", "Home & Kitchen"];

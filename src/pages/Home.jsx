@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { Truck, ShieldCheck, Gift, Star, ArrowRight } from 'lucide-react';
 
 const Home = () => {
+  const { products } = useProducts();
   const featuredProducts = products.slice(0, 4);
 
   return (

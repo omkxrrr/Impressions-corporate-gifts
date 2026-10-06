@@ -19,7 +19,7 @@ const Contact = () => {
                 <MapPin className="w-6 h-6 mr-4 mt-1 opacity-80 text-primary" />
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Our Location</h3>
-                  <p className="opacity-80">123 Business Avenue<br/>Tech Park, Sector 45<br/>New Delhi, 110001</p>
+                  <p className="opacity-80">Chintamaninager Ph1<br/>Bibvewadi, Pune<br/>Maharashtra 411037</p>
                 </div>
               </div>
               
@@ -46,7 +46,7 @@ const Contact = () => {
             <form onSubmit={(e) => { 
               e.preventDefault(); 
               const fd = new FormData(e.target);
-              const message = encodeURIComponent(`Hello Impressions,\n\nName: ${fd.get('name')}\nEmail: ${fd.get('email')}\nSubject: ${fd.get('subject')}\n\nMessage:\n${fd.get('message')}`);
+              const message = encodeURIComponent(`Hello Impressions,\n\nName: ${fd.get('name')}\nEmail: ${fd.get('email')}\nPhone: ${fd.get('phone')}\n\nMessage:\n${fd.get('message')}`);
               window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
             }}>
               <div className="space-y-6">
@@ -59,8 +59,8 @@ const Contact = () => {
                   <input name="email" type="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                  <input name="subject" type="text" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary" required />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <input name="phone" type="tel" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary" required />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
@@ -73,6 +73,20 @@ const Contact = () => {
             </form>
           </div>
 
+        </div>
+
+        {/* Google Maps */}
+        <div className="mt-12 w-full h-96 rounded-xl overflow-hidden border border-gray-300 shadow-sm relative">
+          <iframe 
+            src="https://maps.google.com/maps?q=Chintamaninager%20Ph1,%20Bibvewadi,%20Pune,%20411037&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Impressions Location"
+          ></iframe>
         </div>
       </div>
     </div>

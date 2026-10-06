@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { products, categories } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { Filter, X, Search } from 'lucide-react';
 
 const Shop = () => {
+  const { products, categories, loading } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
   
-  const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
   const [sortOption, setSortOption] = useState('popular');
-const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
-  useEffect(() => {
+  const filteredProducts = useMemo(() => {
     let result = products;
 
     if (searchTerm) {
@@ -25,12 +25,13 @@ const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
       result = result.filter(p => p.category === selectedCategory);
     }
 
-    if (sortOption === 'rating') {
-      result = [...result].sort((a, b) => b.rating - a.rating);
+    // Newest sort implementation (dummy logic using ID for demo)
+    if (sortOption === 'newest') {
+      result = [...result].sort((a, b) => b.id - a.id);
     }
 
-    setFilteredProducts(result);
-  }, [searchTerm, selectedCategory, sortOption]);
+    return result;
+  }, [products, searchTerm, selectedCategory, sortOption]);
 
   useEffect(() => {
     if (categoryParam && categories.includes(categoryParam)) {
@@ -50,9 +51,27 @@ const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
     setSearchParams(searchParams);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
+        <p className="text-gray-500">Loading products...</p>
+      </div>
+    );
+  }
+
+  const { error } = useProducts();
+
   return (
     <div className="bg-gray-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {error && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-md">
+            <strong>Warning:</strong> Backend connection failed ({error}). Using local dummy data instead.
+          </div>
+        )}
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Shop</h1>
           
@@ -84,7 +103,7 @@ const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
                   className="border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
                 >
                   <option value="popular">Popular</option>
-                  <option value="rating">Top Rated</option>
+                  <option value="newest">Newest</option>
                 </select>
               </div>
             </div>
@@ -171,7 +190,7 @@ const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
             ) : (
               <div>
                 <p className="text-sm text-gray-500 mb-4">Showing {filteredProducts.length} results</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                   {filteredProducts.map(product => (
                     <ProductCard key={product.id} product={product} />
                   ))}

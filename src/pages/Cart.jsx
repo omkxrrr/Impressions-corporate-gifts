@@ -43,18 +43,21 @@ const Cart = () => {
                 {cart.map((item) => (
                   <li key={item.id} className="p-4 sm:p-6 flex flex-col sm:grid sm:grid-cols-12 gap-4 items-center">
                     <div className="col-span-8 flex items-center w-full">
-                      <Link to={`/product/${item.id}`} className="flex-shrink-0 w-20 h-20 border border-gray-200 rounded-md overflow-hidden bg-gray-50">
+                      <Link to={`/product/${item.slug}`} className="flex-shrink-0 w-20 h-20 border border-gray-200 rounded-md overflow-hidden bg-gray-50">
                         <img 
-                          src={item.image} 
+                          src={item.images[0]} 
                           alt={item.name} 
                           className="w-full h-full object-cover object-center"
                         />
                       </Link>
                       <div className="ml-4 flex-1">
-                        <Link to={`/product/${item.id}`} className="text-base font-medium text-gray-900 hover:text-primary line-clamp-2">
+                        <Link to={`/product/${item.slug}`} className="text-base font-medium text-gray-900 hover:text-primary line-clamp-2">
                           {item.name}
                         </Link>
                         <p className="mt-1 text-sm text-gray-500">{item.category}</p>
+                        <div className="mt-1 text-sm font-semibold text-gray-900">
+                          {item.salePrice ? `₹${parseFloat(item.salePrice).toLocaleString('en-IN')}` : item.price ? `₹${parseFloat(item.price).toLocaleString('en-IN')}` : 'Price on Request'}
+                        </div>
                         <div className="mt-2 flex items-center justify-between sm:hidden">
                           <button 
                             onClick={() => removeFromCart(item.id)}
@@ -102,18 +105,20 @@ const Cart = () => {
                   <span>Total Items</span>
                   <span className="font-medium text-gray-900">{cart.reduce((a,c) => a + c.quantity, 0)}</span>
                 </div>
+                {getCartTotal() > 0 && (
+                  <div className="flex justify-between text-gray-900 font-bold border-t pt-4">
+                    <span>Estimated Total</span>
+                    <span>₹{getCartTotal().toLocaleString('en-IN')}</span>
+                  </div>
+                )}
               </div>
               
-              <button 
-                onClick={() => {
-                  const itemsText = cart.map(item => `- ${item.name} (${item.quantity}x)`).join('\n');
-                  const message = encodeURIComponent(`Hello Impressions, I would like to request a quote for the following items:\n\n${itemsText}\n\nPlease provide bulk pricing and customization options.`);
-                  window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
-                }}
+              <Link 
+                to="/checkout" 
                 className="w-full flex items-center justify-center bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-primary-hover transition shadow-sm"
               >
-                Proceed to Request Quote <ArrowRight className="ml-2 w-5 h-5" />
-              </button>
+                Proceed to Checkout <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
 
               <div className="mt-4 text-center">
                 <Link to="/shop" className="text-sm text-primary hover:underline">

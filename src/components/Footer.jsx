@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Instagram, Facebook, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
           <div>
             <img src="/logo.png" alt="Impressions Logo" className="h-24 w-auto mb-4 object-contain scale-[1.3] origin-left" />
             <p className="text-sm text-gray-400 mb-4">
-              Your one-stop destination for premium products. Quality meets affordability.
+              Your one-stop destination for premium corporate gifting. Quality meets affordability.
             </p>
             <div className="flex items-center space-x-2 text-primary font-semibold">
               <span>📞</span>
@@ -29,31 +30,36 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-semibold mb-4">Customer Service</h4>
+            <h4 className="text-white font-semibold mb-4">Customer Support</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition">FAQ</a></li>
-              <li><a href="#" className="hover:text-white transition">Shipping & Returns</a></li>
-              <li><a href="#" className="hover:text-white transition">Terms & Conditions</a></li>
-              <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-white transition">Shipping</a></li>
+              <li><a href="#" className="hover:text-white transition">Returns</a></li>
+              <li><a href="#" className="hover:text-white transition">FAQs</a></li>
+              <li><Link to="/contact" className="hover:text-white transition">Contact Us</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-semibold mb-4">Newsletter</h4>
-            <p className="text-sm mb-4">Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
-            <div className="flex">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="bg-gray-800 text-white px-4 py-2 w-full rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-              <button className="bg-primary text-white px-4 py-2 rounded-r-md hover:bg-primary-hover transition">
-                Subscribe
-              </button>
+            <h4 className="text-white font-semibold mb-4">Follow Us</h4>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-primary transition" title="Instagram">
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-primary transition" title="Facebook">
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-primary transition" title="LinkedIn">
+                <Linkedin className="w-6 h-6" />
+              </a>
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-12 pt-8 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} Impressions E-commerce. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-12 pt-8 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+          <p>&copy; {new Date().getFullYear()} Impressions. All Rights Reserved.</p>
+          <div className="space-x-4">
+            <a href="#" className="hover:text-white transition">Privacy Policy</a>
+            <span className="text-gray-600">|</span>
+            <a href="#" className="hover:text-white transition">Terms & Conditions</a>
+          </div>
         </div>
       </div>
     </footer>

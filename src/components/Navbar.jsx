@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { getCartCount } = useCart();
+  const { getWishlistCount } = useWishlist();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -31,8 +33,16 @@ const Navbar = () => {
             <div className="relative">
               <Search className="w-5 h-5 text-gray-500 cursor-pointer hover:text-primary" />
             </div>
+            <Link to="/wishlist" className="relative group">
+              <Heart className="w-6 h-6 text-gray-700 group-hover:text-red-500 transition-colors" />
+              {getWishlistCount() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getWishlistCount()}
+                </span>
+              )}
+            </Link>
             <Link to="/cart" className="relative group">
-              <ShoppingCart className="w-6 h-6 text-gray-700 group-hover:text-primary" />
+              <ShoppingCart className="w-6 h-6 text-gray-700 group-hover:text-primary transition-colors" />
               {getCartCount() > 0 && (
                 <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {getCartCount()}
@@ -43,10 +53,18 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
+            <Link to="/wishlist" className="relative">
+              <Heart className="w-6 h-6 text-gray-700" />
+              {getWishlistCount() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getWishlistCount()}
+                </span>
+              )}
+            </Link>
             <Link to="/cart" className="relative">
               <ShoppingCart className="w-6 h-6 text-gray-700" />
               {getCartCount() > 0 && (
-                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {getCartCount()}
                 </span>
               )}
