@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { API_URL } from '../config';
 
 const ProductContext = createContext();
 
@@ -14,8 +15,8 @@ export const ProductProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const [productsRes, categoriesRes] = await Promise.all([
-          fetch('http://localhost:5006/api/products'),
-          fetch('http://localhost:5006/api/categories')
+          fetch(`${API_URL}/api/products`),
+          fetch(`${API_URL}/api/categories`)
         ]);
 
         if (!productsRes.ok || !categoriesRes.ok) {
