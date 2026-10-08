@@ -99,6 +99,7 @@ const AdminProducts = () => {
                 <th className="px-6 py-3">Product Name</th>
                 <th className="px-6 py-3">Category</th>
                 <th className="px-6 py-3">Slug</th>
+                <th className="px-6 py-3">Featured</th>
                 <th className="px-6 py-3 text-right">Actions</th>
               </tr>
             </thead>
@@ -122,6 +123,29 @@ const AdminProducts = () => {
                   </td>
                   <td className="px-6 py-4 text-gray-400">
                     {product.slug}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button 
+                      onClick={async () => {
+                        try {
+                          if (!product.isFeatured && products.filter(p => p.isFeatured).length >= 7) {
+                            alert('You can only select a maximum of 7 featured products.');
+                            return;
+                          }
+                          const res = await fetch(`${API_URL}/api/products/${product.id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                            body: JSON.stringify({ isFeatured: !product.isFeatured })
+                          });
+                          if (!res.ok) throw new Error('Failed to update');
+                          const updated = await res.json();
+                          setProducts(products.map(p => p.id === product.id ? updated : p));
+                        } catch(e) { alert(e.message); }
+                      }}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${product.isFeatured ? 'bg-yellow-100 text-yellow-800 border border-yellow-300' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                    >
+                      {product.isFeatured ? '★ Featured' : '☆ Set Featured'}
+                    </button>
                   </td>
                   <td className="px-6 py-4 text-right space-x-3">
                     <Link to={`/product/${product.slug}`} target="_blank" className="text-gray-400 hover:text-gray-600">

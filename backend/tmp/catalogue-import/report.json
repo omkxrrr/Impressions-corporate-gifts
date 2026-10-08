@@ -1,0 +1,1172 @@
+{
+  "summary": {
+    "pagesProcessed": 127,
+    "productsDetected": 34,
+    "errors": 93
+  },
+  "products": [
+    {
+      "sku": "FJ9218",
+      "name": "Adidas Round Neck Dryfit Tshirt",
+      "mrp": 1499,
+      "color": null,
+      "sizes": [],
+      "hsn": "61052010",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Round Neck Dryfit Tshirt",
+      "shortDescription": "Adidas Round Neck Dryfit Tshirt",
+      "slug": "adidas-round-neck-dryfit-tshirt-fj9218",
+      "category": "T-Shirts",
+      "sourcePage": 24,
+      "imageCount": 3,
+      "databaseStatus": "updated",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IL4962",
+      "name": "Adidas Product",
+      "mrp": 2499,
+      "color": "Nobmar",
+      "sizes": [],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "60% Cotton & 40 % Polyester",
+      "description": "Adidas Product\nMaterial: 60% Cotton & 40 % Polyester\nColor: Nobmar",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-il4962",
+      "category": "Uncategorized",
+      "sourcePage": 50,
+      "imageCount": 1,
+      "databaseStatus": "updated",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IL4963",
+      "name": "Adidas Product",
+      "mrp": 2499,
+      "color": "Black",
+      "sizes": [],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "60% Cotton & 40 % Polyester",
+      "description": "Adidas Product\nMaterial: 60% Cotton & 40 % Polyester\nColor: Black",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-il4963",
+      "category": "Uncategorized",
+      "sourcePage": 51,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IL4964",
+      "name": "Adidas Product",
+      "mrp": 2499,
+      "color": "LGREYH",
+      "sizes": [],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "60% Cotton & 40 % Polyester",
+      "description": "Adidas Product\nMaterial: 60% Cotton & 40 % Polyester\nColor: LGREYH",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-il4964",
+      "category": "Uncategorized",
+      "sourcePage": 52,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IX3306",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "GREY",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: GREY\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3306",
+      "category": "T-Shirts",
+      "sourcePage": 54,
+      "imageCount": 3,
+      "databaseStatus": "updated",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IX3307",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "CWHITE",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: CWHITE\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3307",
+      "category": "T-Shirts",
+      "sourcePage": 55,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IX3309",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "CONAVY",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: CONAVY\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3309",
+      "category": "T-Shirts",
+      "sourcePage": 56,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "IX3310",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "CGREEN",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: CGREEN\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3310",
+      "category": "T-Shirts",
+      "sourcePage": 57,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IX3311",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "CROYAL",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: CROYAL\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3311",
+      "category": "T-Shirts",
+      "sourcePage": 58,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "IX3313",
+      "name": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "mrp": 1999,
+      "color": "POWRED",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "hsn": "61051020",
+      "gst": 5,
+      "material": "100% Cotton Tipping Tshirt (210 gsm)",
+      "description": "Adidas 100% Cotton Tipping Tshirt (210 gsm)\nMaterial: 100% Cotton Tipping Tshirt (210 gsm)\nColor: POWRED\nAvailable sizes: S, M, L, XL, XXL",
+      "shortDescription": "Adidas 100% Cotton Tipping Tshirt (210 gsm)",
+      "slug": "adidas-100-cotton-tipping-tshirt-210-gsm--ix3313",
+      "category": "T-Shirts",
+      "sourcePage": 59,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "IV7034",
+      "name": "Adidas Product",
+      "mrp": 999,
+      "color": "White",
+      "sizes": [],
+      "hsn": null,
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: White",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-iv7034",
+      "category": "Uncategorized",
+      "sourcePage": 84,
+      "imageCount": 2,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "AZ7689",
+      "name": "Adidas Cap",
+      "mrp": 899,
+      "color": "Bold Onix",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: Bold Onix",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-az7689",
+      "category": "Caps",
+      "sourcePage": 85,
+      "imageCount": 3,
+      "databaseStatus": "updated",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "AZ7703",
+      "name": "Adidas Cap",
+      "mrp": 899,
+      "color": "Black",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: Black",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-az7703",
+      "category": "Caps",
+      "sourcePage": 86,
+      "imageCount": 3,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "AZ7691",
+      "name": "Adidas Cap",
+      "mrp": 899,
+      "color": "Earth Khaki",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: Earth Khaki",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-az7691",
+      "category": "Caps",
+      "sourcePage": 87,
+      "imageCount": 3,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "AZ7674",
+      "name": "Adidas Cap",
+      "mrp": 899,
+      "color": "Black",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: Black",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-az7674",
+      "category": "Caps",
+      "sourcePage": 88,
+      "imageCount": 3,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "AZ7707",
+      "name": "Adidas Cap",
+      "mrp": 899,
+      "color": "Night Shade",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: Night Shade",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-az7707",
+      "category": "Caps",
+      "sourcePage": 89,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "FQ5411",
+      "name": "Adidas Cap",
+      "mrp": 1799,
+      "color": "White",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: White",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-fq5411",
+      "category": "Caps",
+      "sourcePage": 90,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "FK0894",
+      "name": "Adidas Cap",
+      "mrp": 1799,
+      "color": "BLACK/WHITE",
+      "sizes": [],
+      "hsn": "65050090",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Cap\nColor: BLACK/WHITE",
+      "shortDescription": "Adidas Cap",
+      "slug": "adidas-cap-fk0894",
+      "category": "Caps",
+      "sourcePage": 91,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "DZ9392",
+      "name": "Adidas Product",
+      "mrp": 999,
+      "color": "MGREYH/WHITE/BLACK",
+      "sizes": [],
+      "hsn": null,
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: MGREYH/WHITE/BLACK",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-dz9392",
+      "category": "Uncategorized",
+      "sourcePage": 92,
+      "imageCount": 2,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "S15529",
+      "name": "Adidas Product",
+      "mrp": 299,
+      "color": "White",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: White",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-s15529",
+      "category": "Uncategorized",
+      "sourcePage": 93,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "IP4827",
+      "name": "Adidas Product",
+      "mrp": 399,
+      "color": "BLACK",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: BLACK",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4827",
+      "category": "Uncategorized",
+      "sourcePage": 94,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP4828",
+      "name": "Adidas Product",
+      "mrp": 399,
+      "color": "MGSOGR",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: MGSOGR",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4828",
+      "category": "Uncategorized",
+      "sourcePage": 95,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP4829",
+      "name": "Adidas Product",
+      "mrp": 399,
+      "color": "NMARIN",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: NMARIN",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4829",
+      "category": "Uncategorized",
+      "sourcePage": 96,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP4830",
+      "name": "Adidas Product",
+      "mrp": 399,
+      "color": "WHITE",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: WHITE",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4830",
+      "category": "Uncategorized",
+      "sourcePage": 97,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP4877",
+      "name": "Adidas Product",
+      "mrp": 799,
+      "color": "BLACK/WHITE/L T PINK",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: BLACK/WHITE/L T PINK",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4877",
+      "category": "Uncategorized",
+      "sourcePage": 98,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP4878",
+      "name": "Adidas Product",
+      "mrp": 699,
+      "color": "BLACK/CONAVY/WHITE/",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: BLACK/CONAVY/WHITE/",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ip4878",
+      "category": "Uncategorized",
+      "sourcePage": 99,
+      "imageCount": 2,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "FS0635",
+      "name": "Adidas Product",
+      "mrp": 199,
+      "color": "WHITE",
+      "sizes": [],
+      "hsn": "61159500",
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product\nColor: WHITE",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-fs0635",
+      "category": "Uncategorized",
+      "sourcePage": 100,
+      "imageCount": 1,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "EW2449",
+      "name": "Adidas Product",
+      "mrp": 2499,
+      "color": null,
+      "sizes": [],
+      "hsn": null,
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ew2449",
+      "category": "Uncategorized",
+      "sourcePage": 117,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "EW5540",
+      "name": "Adidas Product",
+      "mrp": null,
+      "color": null,
+      "sizes": [],
+      "hsn": null,
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-ew5540",
+      "category": "Uncategorized",
+      "sourcePage": 120,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "CM4980",
+      "name": "Adidas Product",
+      "mrp": 3599,
+      "color": null,
+      "sizes": [],
+      "hsn": null,
+      "gst": null,
+      "material": null,
+      "description": "Adidas Product",
+      "shortDescription": "Adidas Product",
+      "slug": "adidas-product-cm4980",
+      "category": "Uncategorized",
+      "sourcePage": 123,
+      "imageCount": 3,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP1630",
+      "name": "Adidas Shorts",
+      "mrp": 1799,
+      "color": "Black",
+      "sizes": [],
+      "hsn": "62034300",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Shorts\nColor: Black",
+      "shortDescription": "Adidas Shorts",
+      "slug": "adidas-shorts-ip1630",
+      "category": "Shorts",
+      "sourcePage": 124,
+      "imageCount": 3,
+      "databaseStatus": "updated",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP1631",
+      "name": "Adidas Shorts",
+      "mrp": 1799,
+      "color": "Danasl",
+      "sizes": [],
+      "hsn": "62034300",
+      "gst": 5,
+      "material": null,
+      "description": "Adidas Shorts\nColor: Danasl",
+      "shortDescription": "Adidas Shorts",
+      "slug": "adidas-shorts-ip1631",
+      "category": "Shorts",
+      "sourcePage": 125,
+      "imageCount": 0,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": [
+        "No valid images extracted"
+      ]
+    },
+    {
+      "sku": "IP1632",
+      "name": "Adidas Track Pant",
+      "mrp": 2299,
+      "color": "Navy",
+      "sizes": [],
+      "hsn": "62034300",
+      "gst": 12,
+      "material": null,
+      "description": "Adidas Track Pant\nColor: Navy",
+      "shortDescription": "Adidas Track Pant",
+      "slug": "adidas-track-pant-ip1632",
+      "category": "Track Pants",
+      "sourcePage": 126,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    },
+    {
+      "sku": "IP1633",
+      "name": "Adidas Track Pant",
+      "mrp": 2299,
+      "color": "Black",
+      "sizes": [],
+      "hsn": "62034300",
+      "gst": 12,
+      "material": null,
+      "description": "Adidas Track Pant\nColor: Black",
+      "shortDescription": "Adidas Track Pant",
+      "slug": "adidas-track-pant-ip1633",
+      "category": "Track Pants",
+      "sourcePage": 127,
+      "imageCount": 4,
+      "databaseStatus": "created",
+      "imageUploadStatus": "success",
+      "warnings": []
+    }
+  ],
+  "errors": [
+    {
+      "page": 1,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 2,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 3,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 4,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 5,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 6,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 7,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 8,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 9,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 10,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 11,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 12,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 13,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 14,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 15,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 16,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 17,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 18,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 19,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 20,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 21,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 22,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 23,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 25,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 26,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 27,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 28,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 29,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 30,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 31,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 32,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 33,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 34,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 35,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 36,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 37,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 38,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 39,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 40,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 41,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 42,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 43,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 44,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 45,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 46,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 47,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 48,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 49,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 53,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 60,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 61,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 62,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 63,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 64,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 65,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 66,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 67,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 68,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 69,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 70,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 71,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 72,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 73,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 74,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 75,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 76,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 77,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 78,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 79,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 80,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 81,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 82,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 83,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 101,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 102,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 103,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 104,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 105,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 106,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 107,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 108,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 109,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 110,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 111,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 112,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 113,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 114,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 115,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 116,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 118,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 119,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 121,
+      "status": "failed",
+      "error": "Missing SKU"
+    },
+    {
+      "page": 122,
+      "status": "failed",
+      "error": "Missing SKU"
+    }
+  ]
+}

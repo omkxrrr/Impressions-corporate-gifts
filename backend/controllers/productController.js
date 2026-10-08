@@ -40,7 +40,7 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    let { name, slug, category, description, shortDescription, images, features, price, salePrice, stock, sku, isActive } = req.body;
+    let { name, slug, category, description, shortDescription, images, features, price, salePrice, stock, sku, isActive, isFeatured } = req.body;
     
     // Find category ID by name
     let cat = await Category.findOne({ where: { name: category } });
@@ -55,7 +55,8 @@ export const createProduct = async (req, res) => {
       salePrice: salePrice === '' ? null : (salePrice || null), 
       stock: stock === '' ? 0 : (stock || 0), 
       sku: sku === '' ? null : (sku || null), 
-      isActive: isActive !== undefined ? isActive : true
+      isActive: isActive !== undefined ? isActive : true,
+      isFeatured: isFeatured !== undefined ? isFeatured : false
     });
     
     res.status(201).json(product);
@@ -70,7 +71,7 @@ export const updateProduct = async (req, res) => {
     const product = await Product.findByPk(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
-    let { name, slug, category, description, shortDescription, images, features, price, salePrice, stock, sku, isActive } = req.body;
+    let { name, slug, category, description, shortDescription, images, features, price, salePrice, stock, sku, isActive, isFeatured } = req.body;
     
     let categoryId = product.categoryId;
     if (category) {
@@ -88,7 +89,8 @@ export const updateProduct = async (req, res) => {
       salePrice: salePrice === '' ? null : (salePrice !== undefined ? salePrice : product.salePrice),
       stock: stock === '' ? 0 : (stock !== undefined ? parseInt(stock, 10) : product.stock),
       sku: sku === '' ? null : (sku !== undefined ? sku : product.sku),
-      isActive: isActive !== undefined ? isActive : product.isActive
+      isActive: isActive !== undefined ? isActive : product.isActive,
+      isFeatured: isFeatured !== undefined ? isFeatured : product.isFeatured
     });
 
     res.json(product);

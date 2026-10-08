@@ -8,8 +8,9 @@ const Shop = () => {
   const { products, categories, loading } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const searchParam = searchParams.get('search');
   
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(searchParam || '');
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
   const [sortOption, setSortOption] = useState('popular');
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
@@ -18,7 +19,22 @@ const Shop = () => {
     let result = products;
 
     if (searchTerm) {
-      result = result.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      let term = searchTerm.toLowerCase();
+      let searchTerms = [term];
+      if (term === 'french connection') searchTerms.push('fc-', 'fcuk');
+      if (term === 'ucb') searchTerms.push('benetton');
+      if (term === 'jack jones' || term === 'jack & jones' || term === 'jack&jones') {
+        searchTerms.push('jack & jones', 'jack and jones', 'jack jones', 'jack&jones', 'vilmar', 'ethan', 'asger', 'kornad', 'suede jacket', 'austin', 'nashville', 'madd polo', 'plain polo', 'jacquard', 'interlock', 'viktor', 'coolmax', 'slt', 'joren', 'icero', 'demian', 'carline');
+      }
+
+      result = result.filter(p => 
+        searchTerms.some(t => 
+          p.name.toLowerCase().includes(t) || 
+          (p.description && p.description.toLowerCase().includes(t)) ||
+          (p.features && p.features.some(f => f.toLowerCase().includes(t))) ||
+          (p.sku && p.sku.toLowerCase().includes(t))
+        )
+      );
     }
 
     if (selectedCategory !== 'All') {

@@ -57,6 +57,11 @@ const Product = sequelize.define('Product', {
     type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
     defaultValue: []
+  },
+  isFeatured: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 }, {
   timestamps: true,

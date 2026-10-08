@@ -25,8 +25,7 @@ const ProductCard = ({ product }) => {
         <img 
           src={product.images[0]} 
           alt={product.name} 
-          loading="lazy"
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500 bg-white"
           onError={(e) => { e.target.src = 'https://via.placeholder.com/400?text=Product+Image' }}
         />
       </Link>

@@ -93,7 +93,7 @@ const ProductDetails = () => {
               <img 
                 src={mainImage || product.images[0]} 
                 alt={product.name} 
-                className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-700 origin-center"
+                className="w-full h-full object-contain object-center transform group-hover:scale-110 transition-transform duration-700 origin-center bg-white"
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/800?text=Product+Image' }}
               />
             </div>
@@ -105,7 +105,7 @@ const ProductDetails = () => {
                     onClick={() => setMainImage(img)}
                     className={`aspect-square rounded-md overflow-hidden border-2 transition-all duration-200 focus:outline-none ${mainImage === img ? 'border-primary opacity-100 shadow-sm' : 'border-transparent opacity-60 hover:opacity-100 hover:border-gray-200'}`}
                   >
-                    <img src={img} alt={`${product.name} thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`${product.name} thumbnail ${index + 1}`} className="w-full h-full object-contain bg-white" />
                   </button>
                 ))}
               </div>
@@ -147,14 +147,7 @@ const ProductDetails = () => {
                 <div className="text-xl font-medium text-gray-500">Price on Request</div>
               )}
               
-              {/* Stock Status */}
-              <div className="mt-2 text-sm">
-                {product.stock > 0 ? (
-                  <span className="text-green-600 flex items-center"><span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span> In Stock ({product.stock})</span>
-                ) : (
-                  <span className="text-red-500 flex items-center"><span className="w-2 h-2 rounded-full bg-red-500 mr-2"></span> Out of Stock</span>
-                )}
-              </div>
+              {/* Stock Status Removed */}
             </div>
 
             <div className="mb-8">
@@ -166,7 +159,7 @@ const ProductDetails = () => {
                 >-</button>
                 <span className="flex-1 text-center font-medium border-x border-gray-300 py-2">{quantity}</span>
                 <button 
-                  onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                  onClick={() => setQuantity(quantity + 1)}
                   className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-md w-1/3"
                 >+</button>
               </div>
@@ -189,9 +182,12 @@ const ProductDetails = () => {
 
             <div className="border-t border-gray-200 pt-6 mt-auto">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Product Information</h3>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-600 list-none">
                 {product.features?.map((feature, index) => (
-                  <li key={index}>{feature}</li>
+                  <li key={index} className="flex items-start">
+                    <span className="text-primary mr-2 mt-1 flex-shrink-0">•</span>
+                    <span className="break-words">{feature}</span>
+                  </li>
                 ))}
               </ul>
             </div>
