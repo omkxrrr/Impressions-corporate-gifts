@@ -1,12 +1,108 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../context/ProductContext';
-import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles } from 'lucide-react';
+import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles, Shirt, Briefcase, Activity, Layers } from 'lucide-react';
+import { matchesBrand, detectBrand, matchesSubCatalog } from '../utils/catalogCategories';
 
 const Home = () => {
   const { products } = useProducts();
-  const featuredProducts = products.filter(p => p.isFeatured).slice(0, 7);
-  const displayProducts = featuredProducts.length > 0 ? featuredProducts : products.slice(0, 7);
+
+  // Dynamic brand partners for the marquee slider
+  const dynamicBrandPartners = useMemo(() => {
+    const BRAND_METADATA = {
+      'Jack & Jones': {
+        categoryNote: 'Polos, Tees & Jackets',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue//P28.jpg',
+        defaultCount: 42
+      },
+      'Monte Carlo': {
+        categoryNote: 'Oxford Shirts & Knitwear',
+        preferredSku: 'P38',
+        preferredFilter: (p) => p.sku === 'P38' || (p.name && p.name.toLowerCase().includes('oxford shirt')),
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/P38/P38.jpg',
+        zoomClass: 'w-full h-full object-cover scale-[2.4] object-center group-hover:scale-[2.55]',
+        defaultCount: 38
+      },
+      'UCB (Benetton)': {
+        categoryNote: 'Polo T-Shirts & Casuals',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/UCB001/UCB001.jpg',
+        defaultCount: 16
+      },
+      'French Connection': {
+        categoryNote: 'Premium Shirts & Polos',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/FC-P05-01/FC-P05-01.jpg',
+        defaultCount: 28
+      },
+      'Arrow': {
+        categoryNote: 'Executive Formal Wear',
+        preferredFilter: (p) => (p.sku && p.sku.startsWith('ARIK')) || (p.name && p.name.toLowerCase().includes('tipping')),
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/ARIK7032/ARIK7032.jpg',
+        zoomClass: 'w-full h-full object-cover scale-[2.2] object-center group-hover:scale-[2.35]',
+        defaultCount: 14
+      },
+      'Adidas': {
+        categoryNote: 'Sports Tech & Trackwear',
+        preferredFilter: (p) => p.name && (p.name.toLowerCase().includes('poly cotton tshirt') || p.name.toLowerCase().includes('tipping tshirt') || p.name.toLowerCase().includes('dryfit tshirt')),
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/CD1486/CD1486.jpg',
+        defaultCount: 56
+      },
+      'Rare Rabbit': {
+        categoryNote: 'Designer Polos & Formal Shirts',
+        preferredSku: 'RR-P09',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/RR-P09/RR-P09.jpg',
+        defaultCount: 33
+      },
+      'Reebok': {
+        categoryNote: 'Performance Polos & Athletic Jackets',
+        preferredSku: 'INPS00101',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/INPS00101/INPS00101.jpg',
+        defaultCount: 33
+      },
+      'Scott International': {
+        categoryNote: 'Premium Tipped Polos & Bio-Wash Tees',
+        preferredSku: 'SP-1',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/SP-1/SP-1.jpg',
+        defaultCount: 27
+      },
+      'Puma': {
+        categoryNote: 'Activewear & Athleisure',
+        defaultCount: 18
+      },
+      'Nike': {
+        categoryNote: 'Performance Sportswear',
+        defaultCount: 22
+      }
+    };
+
+    const brandsMap = new Map();
+
+    // 1. Seed with known partner houses
+    Object.keys(BRAND_METADATA).forEach(bName => {
+      brandsMap.set(bName, {
+        title: bName,
+        ...BRAND_METADATA[bName]
+      });
+    });
+
+    // 2. Discover any newly imported brands dynamically from database products
+    (products || []).forEach(p => {
+      const detected = detectBrand(p);
+      if (detected && detected !== 'Unbranded' && detected !== 'Corporate Collection' && !brandsMap.has(detected)) {
+        brandsMap.set(detected, {
+          title: detected,
+          categoryNote: 'Corporate Apparel & Merchandise',
+          defaultCount: 0
+        });
+      }
+    });
+
+    // 3. Keep only active brands that have products or placeholders
+    return Array.from(brandsMap.values()).filter(b => {
+      const matchCount = (products || []).filter(p => matchesBrand(p, b.title)).length;
+      return matchCount > 0 || b.title === 'Puma' || b.title === 'Nike';
+    });
+  }, [products]);
 
   return (
     <div className="flex flex-col font-sans bg-white selection:bg-primary selection:text-dark">
@@ -152,203 +248,435 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. Curated Corporate Gifting Suites (Elevated Promotional Banners) */}
-      <section className="py-20 bg-gray-50/70 border-b border-gray-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">Curated Gifting Portfolios</span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-dark">Tailored Corporate Suites</h2>
-            <div className="w-16 h-1 bg-primary mx-auto mt-5"></div>
-          </div>
+      {/* 3. Apparel Catalog & Sub-Catalogues (Category-Wise Gifting Portfolios) */}
+      <section className="py-28 bg-[#090b10] text-white relative overflow-hidden border-y border-white/10">
+        {/* Ambient Gold Radial Glows */}
+        <div className="absolute -top-24 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[160px] pointer-events-none"></div>
+        <div className="absolute -bottom-24 right-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* Suite 1: Luxury Apparel */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl group h-80 sm:h-96 cursor-pointer border border-gray-200">
-              <img 
-                src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1200" 
-                alt="Executive Apparel Suite" 
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent flex flex-col justify-center p-8 sm:p-12">
-                <span className="text-amber-300 font-bold text-xs tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                  Corporate Wardrobe Suite
-                </span>
-                <h3 className="text-white text-3xl sm:text-4xl font-serif font-bold mb-3">
-                  Executive Apparel & Tailoring
-                </h3>
-                <p className="text-gray-300 mb-8 max-w-sm text-sm leading-relaxed">
-                  Authorized Jack & Jones, Monte Carlo, Arrow & French Connection tailored polyesters, satin shirts, and jackets.
-                </p>
-                <Link 
-                  to="/shop" 
-                  className="inline-flex items-center gap-2 bg-white text-dark hover:bg-primary font-bold text-xs uppercase tracking-wider px-7 py-3 rounded-full w-max transition-all duration-300 shadow-md"
-                >
-                  <span>Explore Wardrobe Suite</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-18">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-amber-300 font-bold tracking-[0.25em] uppercase text-xs mb-4 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Executive Wardrobe Architecture</span>
             </div>
-
-            {/* Suite 2: Corporate Wellness & Athletic */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl group h-80 sm:h-96 cursor-pointer border border-gray-200">
-              <img 
-                src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200" 
-                alt="Corporate Wellness Suite" 
-                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent flex flex-col justify-center p-8 sm:p-12">
-                <span className="text-amber-300 font-bold text-xs tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                  Corporate Wellness & Tech
-                </span>
-                <h3 className="text-white text-3xl sm:text-4xl font-serif font-bold mb-3">
-                  High-Performance Activewear
-                </h3>
-                <p className="text-gray-300 mb-8 max-w-sm text-sm leading-relaxed">
-                  Empower employee health with official Adidas, Puma, and sports-technology tracksuits, bags, and accessories.
-                </p>
-                <Link 
-                  to="/shop" 
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-200 via-primary to-amber-500 text-dark font-bold text-xs uppercase tracking-wider px-7 py-3 rounded-full w-max hover:bg-white transition-all duration-300 shadow-md"
-                >
-                  <span>Explore Active Suite</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Authorized Brand Portfolios */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-            <div>
-              <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">Authorized Distribution</span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-dark">Premier Brand Partners</h2>
-              <div className="w-16 h-1 bg-primary mt-5"></div>
-            </div>
-            <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 leading-relaxed">
-              Every item is guaranteed 100% genuine, backed by official warranty certificates and custom enterprise co-branding.
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight">
+              Curated Apparel & <span className="bg-gradient-to-r from-amber-200 via-primary to-amber-500 bg-clip-text text-transparent italic">Sub-Catalogues</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-amber-300 to-primary mx-auto mt-5 rounded-full"></div>
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto mt-4 font-light leading-relaxed">
+              Architected for corporate delegations, leadership summits, and bespoke gifting. Select any tier to explore verified brand styles.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
             {[
-              { title: "Adidas", query: "Adidas", img: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=800" },
-              { title: "Arrow", query: "Arrow", img: "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=800" },
-              { title: "UCB (Benetton)", query: "UCB", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800" },
-              { title: "French Connection", query: ["French Connection", "FCUK", "fc-"], img: "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=800" },
-              { title: "Jack & Jones", query: ["Jack Jones", "Jack & Jones", "Jack and Jones", "Jack&Jones", "vilmar", "ethan", "asger", "kornad", "austin", "nashville", "madd polo", "plain polo", "jacquard", "interlock", "viktor", "coolmax", "slt", "joren", "icero", "demian", "carline"], img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800" },
-              { title: "Monte Carlo", query: "Monte Carlo", img: "https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?q=80&w=800" },
-              { title: "Puma", query: "Puma", img: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=800" },
-              { title: "Nike", query: "Nike", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800" }
-            ].map((brand, idx) => {
-              const terms = Array.isArray(brand.query) ? brand.query.map(t => t.toLowerCase()) : [brand.query.toLowerCase()];
-              const brandCount = products.filter(p => 
-                terms.some(term => 
-                  p.name.toLowerCase().includes(term) || 
-                  (p.description && p.description.toLowerCase().includes(term)) ||
-                  (p.features && p.features.some(f => f.toLowerCase().includes(term))) ||
-                  (p.sku && p.sku.toLowerCase().includes(term))
-                )
-              ).length;
-              
-              if (brandCount === 0 && (brand.title === "Puma" || brand.title === "Nike")) return null;
-              
+              {
+                id: 't-shirts',
+                suiteNo: 'SUITE 01',
+                subBadge: 'TACTILE KNITWEAR',
+                title: 'T-Shirts & Polos',
+                shortCta: 'Polos & Tees',
+                IconComp: Shirt,
+                image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop',
+                tagline: 'Polo shirts, dryfit technical tees, tipping collars & bespoke casuals.',
+                brands: ['Jack & Jones', 'UCB (Benetton)', 'Arrow', 'Monte Carlo', 'Adidas', 'French Connection']
+              },
+              {
+                id: 'shirts',
+                suiteNo: 'SUITE 02',
+                subBadge: 'FORMAL TAILORING',
+                title: 'Formal & Oxford Shirts',
+                shortCta: 'Oxford Shirts',
+                IconComp: Briefcase,
+                image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=800&auto=format&fit=crop',
+                tagline: '100% Egyptian Oxford, Giza Gilt, woven executive & presidential shirts.',
+                brands: ['Monte Carlo', 'Arrow', 'French Connection', 'Jack & Jones']
+              },
+              {
+                id: 'pants',
+                suiteNo: 'SUITE 03',
+                subBadge: 'PERFORMANCE BOTTOMS',
+                title: 'Pants & Tracksuits',
+                shortCta: 'Track & Pants',
+                IconComp: Activity,
+                image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=800&auto=format&fit=crop',
+                tagline: 'Executive track suits, active joggers, corporate chinos & bespoke trousers.',
+                brands: ['Monte Carlo', 'Adidas', 'Puma']
+              },
+              {
+                id: 'jackets',
+                suiteNo: 'SUITE 04',
+                subBadge: 'OUTERWEAR & SUEDE',
+                title: 'Jackets & Outerwear',
+                shortCta: 'Outerwear Suite',
+                IconComp: ShieldCheck,
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
+                tagline: 'Bespoke suede jackets, winterwear, hoodies, corporate blazers & coats.',
+                brands: ['Jack & Jones', 'Monte Carlo', 'French Connection']
+              }
+            ].map((cat) => {
+              const IconComponent = cat.IconComp;
               return (
-                <Link 
-                  to={`/shop?search=${Array.isArray(brand.query) ? brand.query[0] : brand.query}`} 
-                  key={idx} 
-                  className="group relative h-80 overflow-hidden bg-[#0c0e14] block rounded-2xl shadow-md hover:shadow-[0_16px_36px_rgba(203,152,52,0.22)] border border-gray-200/60 hover:border-primary transition-all duration-500 transform hover:-translate-y-2"
+                <div 
+                  key={cat.id}
+                  className="group relative rounded-3xl overflow-hidden bg-[#11141e] border border-white/10 hover:border-primary/70 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_60px_rgba(203,152,52,0.22)] transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2"
                 >
-                  <img 
-                    src={brand.img} 
-                    alt={brand.title} 
-                    className="w-full h-full object-cover opacity-50 group-hover:opacity-35 group-hover:scale-110 transition duration-700" 
-                  />
-                  <div className="absolute inset-0 flex flex-col justify-between p-6 text-center">
-                    <div className="flex justify-between items-center">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-amber-300 bg-black/80 px-3 py-1 rounded-full border border-amber-400/60 backdrop-blur-md shadow-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-                        Official Channel
+                  {/* Visual Editorial Header with High Fashion Photo */}
+                  <div className="relative h-52 w-full overflow-hidden bg-[#0c0e14]">
+                    <img 
+                      src={cat.image} 
+                      alt={cat.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-75 group-hover:opacity-95" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#11141e] via-[#11141e]/50 to-transparent"></div>
+                    
+                    {/* Suite Header Badges */}
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                      <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-amber-300 bg-black/70 px-3 py-1 rounded-full border border-amber-500/30 backdrop-blur-md shadow-sm">
+                        {cat.suiteNo}
                       </span>
-                      <span className="text-white text-xs font-semibold bg-white/20 px-3 py-1 rounded-full backdrop-blur-md border border-white/30">
-                        {brandCount} Items
-                      </span>
+                      <div className="w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-amber-300 flex items-center justify-center shadow-md group-hover:border-primary group-hover:text-primary transition-all duration-300">
+                        <IconComponent className="w-4 h-4" />
+                      </div>
                     </div>
-
-                    <div>
-                      <h3 className="font-serif text-3xl font-bold text-white mb-3 tracking-wide drop-shadow-md">
-                        {brand.title}
-                      </h3>
-                      <span className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-dark bg-gradient-to-r from-amber-200 via-primary to-amber-500 px-5 py-2.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 shadow-md">
-                        <span>Browse Catalog</span>
-                        <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
-                      </span>
-                    </div>
-
-                    <div className="h-2"></div>
                   </div>
-                </Link>
+
+                  {/* Card Content Base */}
+                  <div className="p-6 pt-1 flex flex-col flex-grow justify-between relative z-10">
+                    <div>
+                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-1.5">
+                        {cat.subBadge}
+                      </div>
+                      <h3 className="font-serif text-2xl font-bold text-white mb-2 group-hover:text-amber-200 transition-colors tracking-wide">
+                        {cat.title}
+                      </h3>
+                      <p className="text-xs text-gray-400 mb-6 leading-relaxed font-light">
+                        {cat.tagline}
+                      </p>
+
+                      {/* Brand Chips Inside this Sub-Catalog */}
+                      {(() => {
+                        const activeSuiteBrands = dynamicBrandPartners
+                          .map(b => b.title)
+                          .filter(bTitle => (products || []).some(p => matchesSubCatalog(p, cat.id) && matchesBrand(p, bTitle)));
+                        const brandsToShow = activeSuiteBrands.length > 0 ? activeSuiteBrands : cat.brands;
+
+                        return (
+                          <div className="mb-6 pt-4 border-t border-white/10">
+                            <div className="flex items-center justify-between mb-2.5">
+                              <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
+                                Partner Houses
+                              </span>
+                              <span className="text-[10px] text-amber-300 font-semibold">
+                                {brandsToShow.length} Brands
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {brandsToShow.map((bName) => (
+                                <Link
+                                  key={bName}
+                                  to={`/shop?subcatalog=${cat.id}&brand=${encodeURIComponent(bName)}`}
+                                  className="text-[11px] font-medium px-3 py-1 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary hover:text-dark text-gray-300 border border-white/10 hover:border-transparent transition-all shadow-xs"
+                                >
+                                  {bName}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+
+                    {/* Luxury Gold CTA Button */}
+                    <Link
+                      to={`/shop?subcatalog=${cat.id}`}
+                      className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white text-dark font-bold text-xs uppercase tracking-wider text-center transition-all duration-300 flex items-center justify-between group/btn shadow-[0_4px_20px_rgba(203,152,52,0.3)] hover:shadow-[0_6px_25px_rgba(255,255,255,0.4)]"
+                    >
+                      <span>Explore {cat.shortCta}</span>
+                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
+                    </Link>
+                  </div>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* 5. Trending Gifts / Marquee Showcase */}
-      <section className="py-24 bg-[#0d0f16] text-white overflow-hidden relative border-y border-white/10">
+      {/* 4. Authorized Brand Portfolios - Continuous Animated Sliding Track */}
+      <section className="py-24 bg-white relative overflow-hidden">
         <style>{`
-          @keyframes scroll {
+          @keyframes brandSlideTrack {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-315px * ${displayProducts.length} - 1.5rem * ${displayProducts.length})); }
+            100% { transform: translateX(-50%); }
           }
-          .animate-continuous-scroll {
-            animation: scroll 28s linear infinite;
+          .animate-brand-slide {
+            display: flex;
             width: max-content;
+            animation: brandSlideTrack 36s linear infinite;
           }
-          .animate-continuous-scroll:hover {
+          .animate-brand-slide:hover {
             animation-play-state: paused;
           }
         `}</style>
-        
-        {/* Subtle Ambient light */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-primary/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">Executive Showcase</span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white">Trending Procurement Gifts</h2>
-            <div className="w-16 h-1 bg-primary mx-auto mt-5"></div>
-            <p className="text-gray-400 text-sm max-w-lg mx-auto mt-4 font-light">
-              Hover on any product to pause and inspect detailed corporate specifications.
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between">
+            <div>
+              <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">Authorized Distribution</span>
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-dark">Premier Brand Partners</h2>
+              <div className="w-16 h-1 bg-primary mt-5"></div>
+            </div>
+            <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 leading-relaxed font-light">
+              Every item is guaranteed 100% genuine, backed by official warranty certificates and custom enterprise co-branding.
             </p>
           </div>
-          
-          <div className="mb-16 relative">
-            <div className="flex gap-6 animate-continuous-scroll">
-              {[...displayProducts, ...displayProducts, ...displayProducts].map((product, idx) => (
-                <div key={`${product.id}-${idx}`} className="w-[315px] shrink-0 text-gray-900">
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
+        </div>
+
+        {/* Continuous Animated Track - Zero Side Blend Overlays, Zero Scrollbars */}
+        <div className="w-full overflow-hidden">
+          <div className="animate-brand-slide flex gap-6">
+            {[...dynamicBrandPartners, ...dynamicBrandPartners].map((brand, idx) => {
+              const matchingProducts = (products || []).filter(p => matchesBrand(p, brand.title));
+              const brandCount = matchingProducts.length || brand.defaultCount;
+              if (matchingProducts.length === 0 && (brand.title === "Puma" || brand.title === "Nike")) return null;
+
+              // Extract real product image from actual imported database products
+              let prodWithImg = null;
+              if (brand.preferredSku) {
+                prodWithImg = matchingProducts.find(p => p.sku === brand.preferredSku && p.images && p.images.length > 0);
+              }
+              if (!prodWithImg && brand.preferredFilter) {
+                prodWithImg = matchingProducts.find(p => brand.preferredFilter(p) && p.images && p.images.length > 0);
+              }
+              if (!prodWithImg) {
+                prodWithImg = matchingProducts.find(p => p.images && p.images.length > 0 && p.images[0]);
+              }
+
+              const realImg = prodWithImg?.images?.[0] || brand.fallbackImg || ('https://via.placeholder.com/400?text=' + encodeURIComponent(brand.title));
+
+              return (
+                <Link 
+                  to={`/shop?brand=${encodeURIComponent(brand.title)}`} 
+                  key={`${brand.title}-${idx}`} 
+                  className="group rounded-2xl overflow-hidden bg-white border border-gray-200/90 hover:border-primary shadow-sm hover:shadow-[0_16px_36px_rgba(203,152,52,0.18)] transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col h-[340px] w-[280px] sm:w-[315px] shrink-0 select-none cursor-pointer"
+                >
+                  {/* Clean Canvas for REAL Product Photo */}
+                  <div className="relative h-56 w-full p-4 bg-gradient-to-b from-gray-50 to-gray-100/60 flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={realImg} 
+                      alt={`${brand.title} Corporate Gifting Product`} 
+                      className={`${brand.zoomClass || 'max-h-full max-w-full object-contain group-hover:scale-108'} transition-transform duration-700 drop-shadow-sm select-none pointer-events-none`} 
+                      onError={(e) => { 
+                        if (brand.fallbackImg && e.target.src !== brand.fallbackImg) {
+                          e.target.src = brand.fallbackImg;
+                        } else {
+                          e.target.src = 'https://via.placeholder.com/400?text=' + encodeURIComponent(brand.title);
+                        }
+                      }}
+                    />
+                    
+                    {/* Top Badges */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-amber-900 bg-amber-50/95 px-2.5 py-1 rounded-full border border-amber-300 shadow-xs backdrop-blur-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                        Official Brand
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="text-gray-700 text-[11px] font-bold bg-white/95 px-2.5 py-1 rounded-full border border-gray-200 shadow-xs backdrop-blur-sm">
+                        {brandCount} Products
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Executive Dark Card Base */}
+                  <div className="p-5 flex-grow flex items-center justify-between bg-[#0e1117] text-white border-t border-white/10 group-hover:bg-[#141822] transition-colors">
+                    <div>
+                      <div className="text-[10px] text-amber-300 font-semibold uppercase tracking-wider mb-1">
+                        {brand.categoryNote}
+                      </div>
+                      <h3 className="font-serif text-2xl font-bold text-white group-hover:text-primary transition-colors tracking-wide">
+                        {brand.title}
+                      </h3>
+                    </div>
+                    <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-primary text-white group-hover:text-dark flex items-center justify-center transition-all duration-300 shrink-0">
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
-          
-          <div className="flex justify-center relative z-20">
-            <Link 
-              to="/shop" 
-              className="group flex items-center gap-3 bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white text-dark font-bold text-xs uppercase tracking-widest px-10 py-4 rounded-full transition-all duration-300 shadow-[0_4px_25px_rgba(203,152,52,0.35)] hover:-translate-y-1"
-            >
-              <span>View Entire 400+ Product Catalog</span> 
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
-            </Link>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 mt-8 text-center">
+          <div className="inline-flex items-center gap-2 text-xs text-gray-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+            <span>Hover on any brand card to pause and explore collections</span>
           </div>
+        </div>
+      </section>
+
+      {/* 5. Separate Sliding Client Brand Logos Showcase */}
+      <section className="py-24 bg-[#0d0f16] text-white overflow-hidden relative border-y border-white/10">
+        <style>{`
+          @keyframes clientScrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes clientScrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+          .animate-clients-left {
+            display: flex;
+            width: max-content;
+            animation: clientScrollLeft 38s linear infinite;
+          }
+          .animate-clients-right {
+            display: flex;
+            width: max-content;
+            animation: clientScrollRight 38s linear infinite;
+          }
+          .animate-clients-left:hover,
+          .animate-clients-right:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+
+        {/* Subtle Ambient light */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-14 text-center">
+          <span className="text-amber-300 font-bold text-xs tracking-[0.25em] uppercase block mb-3">
+            ✦ Premier Corporate Relationships
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-wide">Our Clients</h2>
+          <div className="w-16 h-1 bg-primary mx-auto mt-5"></div>
+          <p className="text-gray-400 text-sm max-w-2xl mx-auto mt-4 font-light leading-relaxed">
+            Trusted corporate gifting partner to 30+ multinational leaders, engineering conglomerates, and Fortune enterprises.
+          </p>
+        </div>
+
+        {/* Sliding Tracks Container with Soft Fade Edges */}
+        <div className="relative overflow-hidden space-y-6">
+          <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-[#0d0f16] via-[#0d0f16]/90 to-transparent z-20 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-[#0d0f16] via-[#0d0f16]/90 to-transparent z-20 pointer-events-none"></div>
+
+          {/* Row 1: Sliding Left (Clients 1 to 16) */}
+          <div className="animate-clients-left flex gap-5">
+            {[
+              { id: 1, name: "Advanta" },
+              { id: 2, name: "DongYang" },
+              { id: 3, name: "EFL" },
+              { id: 4, name: "Sungro Seeds" },
+              { id: 5, name: "Emerson" },
+              { id: 6, name: "Hytech" },
+              { id: 7, name: "Ishwar Parmar Group" },
+              { id: 8, name: "BMB Construction" },
+              { id: 9, name: "Mahyco" },
+              { id: 10, name: "PolyWorks" },
+              { id: 11, name: "Optra Systems" },
+              { id: 12, name: "Metro Services" },
+              { id: 13, name: "Evolve" },
+              { id: 14, name: "H&R Block" },
+              { id: 15, name: "Hager" },
+              { id: 16, name: "SLB" },
+              // Duplicate for seamless infinite loop
+              { id: 1, name: "Advanta" },
+              { id: 2, name: "DongYang" },
+              { id: 3, name: "EFL" },
+              { id: 4, name: "Sungro Seeds" },
+              { id: 5, name: "Emerson" },
+              { id: 6, name: "Hytech" },
+              { id: 7, name: "Ishwar Parmar Group" },
+              { id: 8, name: "BMB Construction" },
+              { id: 9, name: "Mahyco" },
+              { id: 10, name: "PolyWorks" },
+              { id: 11, name: "Optra Systems" },
+              { id: 12, name: "Metro Services" },
+              { id: 13, name: "Evolve" },
+              { id: 14, name: "H&R Block" },
+              { id: 15, name: "Hager" },
+              { id: 16, name: "SLB" },
+            ].map((client, idx) => (
+              <div 
+                key={`r1-${client.id}-${idx}`}
+                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-md hover:shadow-2xl border border-white/20 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
+                title={client.name}
+              >
+                <img 
+                  src={`/clients/client-${client.id}.png`} 
+                  alt={client.name} 
+                  className="max-h-12 max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Row 2: Sliding Right (Clients 17 to 31) */}
+          <div className="animate-clients-right flex gap-5">
+            {[
+              { id: 17, name: "Visteon" },
+              { id: 18, name: "Yogesh Enterprises" },
+              { id: 19, name: "Nipro" },
+              { id: 20, name: "Praj Industries" },
+              { id: 21, name: "Xcaliber Infotech" },
+              { id: 22, name: "Amnicom" },
+              { id: 23, name: "Druva" },
+              { id: 24, name: "TATA Technologies" },
+              { id: 25, name: "BP" },
+              { id: 26, name: "POSCO Maharashtra" },
+              { id: 27, name: "Paranjape Schemes" },
+              { id: 28, name: "Harbinger Group" },
+              { id: 29, name: "Rahi Systems" },
+              { id: 30, name: "Saksham Healthcare" },
+              { id: 31, name: "Smith+Nephew" },
+              // Duplicate for seamless infinite loop
+              { id: 17, name: "Visteon" },
+              { id: 18, name: "Yogesh Enterprises" },
+              { id: 19, name: "Nipro" },
+              { id: 20, name: "Praj Industries" },
+              { id: 21, name: "Xcaliber Infotech" },
+              { id: 22, name: "Amnicom" },
+              { id: 23, name: "Druva" },
+              { id: 24, name: "TATA Technologies" },
+              { id: 25, name: "BP" },
+              { id: 26, name: "POSCO Maharashtra" },
+              { id: 27, name: "Paranjape Schemes" },
+              { id: 28, name: "Harbinger Group" },
+              { id: 29, name: "Rahi Systems" },
+              { id: 30, name: "Saksham Healthcare" },
+              { id: 31, name: "Smith+Nephew" },
+            ].map((client, idx) => (
+              <div 
+                key={`r2-${client.id}-${idx}`}
+                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-md hover:shadow-2xl border border-white/20 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
+                title={client.name}
+              >
+                <img 
+                  src={`/clients/client-${client.id}.png`} 
+                  alt={client.name} 
+                  className="max-h-12 max-w-[155px] object-contain group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Partner Action */}
+        <div className="flex justify-center mt-14 relative z-10">
+          <a 
+            href="#enquire" 
+            className="group flex items-center gap-3 bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white text-dark font-bold text-xs uppercase tracking-widest px-10 py-4 rounded-full transition-all duration-300 shadow-[0_4px_25px_rgba(203,152,52,0.35)] hover:-translate-y-1"
+          >
+            <span>Partner With Impressions For Corporate Gifting</span> 
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
+          </a>
         </div>
       </section>
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Instagram, Facebook, Linkedin, Phone, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -41,11 +41,11 @@ const Footer = () => {
             </p>
             <div className="space-y-2 text-xs">
               <div className="flex items-center space-x-2 text-primary font-semibold">
-                <span>📞</span>
+                <Phone className="w-3.5 h-3.5" />
                 <a href="tel:+917620872092" className="hover:text-white transition">+91 76208 72092</a>
               </div>
               <div className="flex items-center space-x-2 text-green-400 font-semibold">
-                <span>💬</span>
+                <MessageCircle className="w-3.5 h-3.5" />
                 <a href="https://wa.me/917620872092?text=Hello%20Impressions%20Team,%20I%20have%20an%20enquiry%20regarding%20corporate%20gifting." target="_blank" rel="noreferrer" className="hover:text-white transition">Direct WhatsApp Desk</a>
               </div>
             </div>

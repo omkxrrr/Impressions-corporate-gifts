@@ -133,21 +133,36 @@ const ProductDetails = () => {
 
             {/* Price Block */}
             <div className="mb-6">
-              {product.salePrice ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl font-bold text-gray-900">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
-                  <span className="text-xl text-gray-400 line-through">₹{parseFloat(product.price).toLocaleString('en-IN')}</span>
-                  <span className="text-sm font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">
-                    {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
-                  </span>
-                </div>
-              ) : product.price ? (
-                <div className="text-3xl font-bold text-gray-900">₹{parseFloat(product.price).toLocaleString('en-IN')}</div>
-              ) : (
-                <div className="text-xl font-medium text-gray-500">Price on Request</div>
-              )}
-              
-              {/* Stock Status Removed */}
+              {(() => {
+                const effectivePrice = product.price || (() => {
+                  const mrp = product.features?.find(f => typeof f === 'string' && f.toLowerCase().includes('mrp'));
+                  if (mrp) {
+                    const match = mrp.match(/(\d+[\d,.]*)/);
+                    return match ? match[1].replace(/,/g, '') : null;
+                  }
+                  return null;
+                })();
+
+                if (product.salePrice) {
+                  return (
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl font-bold text-gray-900">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
+                      {effectivePrice && (
+                        <span className="text-xl text-gray-400 line-through">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
+                      )}
+                      {effectivePrice && (
+                        <span className="text-sm font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">
+                          {Math.round(((effectivePrice - product.salePrice) / effectivePrice) * 100)}% OFF
+                        </span>
+                      )}
+                    </div>
+                  );
+                }
+                if (effectivePrice) {
+                  return <div className="text-3xl font-bold text-gray-900">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</div>;
+                }
+                return <div className="text-xl font-medium text-gray-500">Price on Request</div>;
+              })()}
             </div>
 
             <div className="mb-8">

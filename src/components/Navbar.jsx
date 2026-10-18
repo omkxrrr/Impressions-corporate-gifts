@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search, Heart } from 'lucide-react';
+import { ShoppingCart, Menu, X, Search, Heart, Shirt, Briefcase, Activity, ShieldCheck, ChevronDown } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 
@@ -56,9 +56,64 @@ const Navbar = () => {
               <Link to="/" className="text-gray-800 hover:text-primary transition-colors relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">
                 Home
               </Link>
-              <Link to="/shop" className="text-gray-800 hover:text-primary transition-colors relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">
-                Corporate Catalog
-              </Link>
+              
+              {/* Corporate Catalog Dropdown */}
+              <div className="relative group py-2">
+                <Link to="/shop" className="text-gray-800 group-hover:text-primary transition-colors flex items-center gap-1.5 py-2">
+                  <span>Corporate Catalog</span>
+                  <span className="text-[9px] text-gray-400 group-hover:text-primary">▼</span>
+                </Link>
+                
+                {/* Luxury Dropdown Menu */}
+                <div className="absolute top-full left-0 w-80 bg-[#0c0e14] border border-white/10 rounded-2xl shadow-2xl p-4 hidden group-hover:block z-50">
+                  <div className="text-[10px] uppercase tracking-widest text-amber-300 font-bold px-3 py-1 mb-2 border-b border-white/10 flex items-center justify-between">
+                    <span>Apparel Sub-Catalogues</span>
+                    <span className="text-[9px] text-gray-400 font-normal">By Brands</span>
+                  </div>
+                  <Link to="/shop?subcatalog=t-shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                      <Shirt className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-bold">T-Shirts & Polos</div>
+                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Jack & Jones, Scott International, Reebok, Rare Rabbit</div>
+                    </div>
+                  </Link>
+                  <Link to="/shop?subcatalog=shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                      <Briefcase className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-bold">Formal & Oxford Shirts</div>
+                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Rare Rabbit, Monte Carlo, Arrow</div>
+                    </div>
+                  </Link>
+                  <Link to="/shop?subcatalog=pants" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                      <Activity className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-bold">Pants & Tracksuits</div>
+                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Monte Carlo, Adidas, Puma</div>
+                    </div>
+                  </Link>
+                  <Link to="/shop?subcatalog=jackets" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-bold">Jackets & Outerwear</div>
+                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Reebok, Rare Rabbit, Jack & Jones</div>
+                    </div>
+                  </Link>
+                  <div className="border-t border-white/10 mt-2 pt-2">
+                    <Link to="/shop" className="block text-center text-xs font-bold text-amber-300 hover:underline py-1">
+                      View Full Corporate Catalog (400+) →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
               <Link to="/about" className="text-gray-800 hover:text-primary transition-colors relative py-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">
                 About Us
               </Link>
@@ -129,7 +184,17 @@ const Navbar = () => {
           <div className="md:hidden border-t border-gray-100 bg-white/98 backdrop-blur-lg">
             <div className="px-4 pt-3 pb-6 space-y-2">
               <Link to="/" onClick={toggleMenu} className="block px-3 py-2 text-base font-medium text-gray-800 hover:text-primary hover:bg-gray-50 rounded-lg">Home</Link>
-              <Link to="/shop" onClick={toggleMenu} className="block px-3 py-2 text-base font-medium text-gray-800 hover:text-primary hover:bg-gray-50 rounded-lg">Corporate Catalog</Link>
+              
+              <div className="py-1">
+                <Link to="/shop" onClick={toggleMenu} className="block px-3 py-2 text-base font-bold text-gray-900 hover:text-primary hover:bg-gray-50 rounded-lg">Corporate Catalog</Link>
+                <div className="pl-4 space-y-1 mt-1 border-l-2 border-primary/40 ml-3">
+                  <Link to="/shop?subcatalog=t-shirts" onClick={toggleMenu} className="block py-1.5 text-xs font-semibold text-gray-600 hover:text-primary">T-Shirts & Polos (Jack & Jones, Scott International, Reebok...)</Link>
+                  <Link to="/shop?subcatalog=shirts" onClick={toggleMenu} className="block py-1.5 text-xs font-semibold text-gray-600 hover:text-primary">Formal Shirts (Rare Rabbit, Monte Carlo...)</Link>
+                  <Link to="/shop?subcatalog=pants" onClick={toggleMenu} className="block py-1.5 text-xs font-semibold text-gray-600 hover:text-primary">Pants & Tracksuits (Monte Carlo, Adidas...)</Link>
+                  <Link to="/shop?subcatalog=jackets" onClick={toggleMenu} className="block py-1.5 text-xs font-semibold text-gray-600 hover:text-primary">Jackets & Outerwear (Reebok, Rare Rabbit...)</Link>
+                </div>
+              </div>
+
               <Link to="/about" onClick={toggleMenu} className="block px-3 py-2 text-base font-medium text-gray-800 hover:text-primary hover:bg-gray-50 rounded-lg">About Us</Link>
               <Link to="/contact" onClick={toggleMenu} className="block px-3 py-2 text-base font-medium text-gray-800 hover:text-primary hover:bg-gray-50 rounded-lg">Contact</Link>
               <a 

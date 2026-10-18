@@ -1,0 +1,222 @@
+{
+  "count": 31,
+  "exactBoxes": [
+    {
+      "name": "Advanta",
+      "left": 44,
+      "top": 138,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "DongYang",
+      "left": 235,
+      "top": 138,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "EFL",
+      "left": 426,
+      "top": 138,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Sungro Seeds",
+      "left": 617,
+      "top": 138,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Emerson",
+      "left": 808,
+      "top": 138,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Hytech",
+      "left": 44,
+      "top": 236,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Ishwar Parmar Group",
+      "left": 235,
+      "top": 236,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "BMB Construction",
+      "left": 426,
+      "top": 236,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Mahyco",
+      "left": 617,
+      "top": 236,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "PolyWorks",
+      "left": 808,
+      "top": 236,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Optra Systems",
+      "left": 44,
+      "top": 334,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Metro Services",
+      "left": 235,
+      "top": 334,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Evolve",
+      "left": 426,
+      "top": 334,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "H&R Block",
+      "left": 617,
+      "top": 334,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Hager",
+      "left": 808,
+      "top": 334,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "SLB",
+      "left": 44,
+      "top": 432,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Visteon",
+      "left": 235,
+      "top": 432,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Yogesh Enterprises",
+      "left": 426,
+      "top": 432,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Nipro",
+      "left": 617,
+      "top": 432,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Praj Industries",
+      "left": 808,
+      "top": 432,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Xcaliber Infotech",
+      "left": 44,
+      "top": 530,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Amnicom",
+      "left": 235,
+      "top": 530,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "Druva",
+      "left": 426,
+      "top": 530,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "TATA Technologies",
+      "left": 617,
+      "top": 530,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "BP",
+      "left": 808,
+      "top": 530,
+      "width": 172,
+      "height": 74
+    },
+    {
+      "name": "POSCO Maharashtra",
+      "left": 44,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    },
+    {
+      "name": "Paranjape Schemes",
+      "left": 203,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    },
+    {
+      "name": "Harbinger Group",
+      "left": 362,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    },
+    {
+      "name": "Rahi Systems",
+      "left": 521,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    },
+    {
+      "name": "Saksham Healthcare",
+      "left": 680,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    },
+    {
+      "name": "Smith+Nephew",
+      "left": 839,
+      "top": 628,
+      "width": 141,
+      "height": 74
+    }
+  ]
+}

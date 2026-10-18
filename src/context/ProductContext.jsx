@@ -30,8 +30,18 @@ export const ProductProvider = ({ children }) => {
         // Map category objects to an array of strings to keep UI compatibility
         setCategories(categoriesData.map(c => c.name));
       } catch (err) {
-        console.warn("Using local dummy data because backend fetch failed:", err.message);
-        setError(err.message);
+        console.warn("Backend not reached, loading static catalogue from /brands_products.json:", err.message);
+        try {
+          const localRes = await fetch('/brands_products.json');
+          if (localRes.ok) {
+            const localProducts = await localRes.json();
+            if (Array.isArray(localProducts) && localProducts.length > 0) {
+              setProducts(localProducts);
+            }
+          }
+        } catch (localErr) {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }
