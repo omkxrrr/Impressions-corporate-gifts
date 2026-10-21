@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { ShoppingCart, Heart } from 'lucide-react';
+import { BrandCornerBadge } from './BrandLogo';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -29,10 +30,8 @@ const ProductCard = ({ product }) => {
           onError={(e) => { e.target.src = 'https://via.placeholder.com/400?text=Product+Image' }}
         />
         
-        {/* Subtle Luxury Tag */}
-        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-white/90 backdrop-blur-xs px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-gray-200/60 text-[8px] sm:text-[10px] font-semibold tracking-wider uppercase text-gray-700 shadow-xs">
-          Executive
-        </div>
+        {/* Official Brand Corner Badge */}
+        <BrandCornerBadge product={product} position="top-left" />
       </Link>
       
       <button 
@@ -59,45 +58,58 @@ const ProductCard = ({ product }) => {
         </p>
         
         {/* Price Block */}
-        <div className="mt-auto mb-2 sm:mb-3.5 pt-2 sm:pt-3 border-t border-gray-100 flex items-center justify-between gap-1">
-          <div className="min-w-0">
-            <div className="text-[8px] sm:text-[10px] uppercase tracking-wider text-gray-400 font-medium truncate">Bulk Rate</div>
-            <div className="flex items-baseline gap-1 sm:gap-2">
-              {(() => {
-                const effectivePrice = product.price || (() => {
-                  const mrp = product.features?.find(f => typeof f === 'string' && f.toLowerCase().includes('mrp'));
-                  if (mrp) {
-                    const match = mrp.match(/(\d+[\d,.]*)/);
-                    return match ? match[1].replace(/,/g, '') : null;
-                  }
-                  return null;
-                })();
+        <div className="mt-auto mb-2 sm:mb-3 pt-2 sm:pt-2.5 border-t border-gray-100 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between gap-1">
+            <div className="min-w-0">
+              <div className="text-[8px] sm:text-[9.5px] uppercase tracking-wider text-gray-400 font-medium truncate">Indicative MRP</div>
+              <div className="flex items-baseline gap-1 sm:gap-2">
+                {(() => {
+                  const effectivePrice = product.price || (() => {
+                    const mrp = product.features?.find(f => typeof f === 'string' && f.toLowerCase().includes('mrp'));
+                    if (mrp) {
+                      const match = mrp.match(/(\d+[\d,.]*)/);
+                      return match ? match[1].replace(/,/g, '') : null;
+                    }
+                    return null;
+                  })();
 
-                if (product.salePrice) {
-                  return (
-                    <>
-                      <span className="font-bold text-gray-900 text-xs sm:text-base md:text-lg">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
-                      {effectivePrice && (
-                        <span className="text-[10px] sm:text-xs text-gray-400 line-through">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
-                      )}
-                    </>
-                  );
-                }
-                if (effectivePrice) {
-                  return <span className="font-bold text-gray-900 text-xs sm:text-base md:text-lg">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>;
-                }
-                return <span className="text-[10px] sm:text-xs font-semibold text-primary">Custom Quote</span>;
-              })()}
+                  if (product.salePrice) {
+                    return (
+                      <>
+                        <span className="font-bold text-gray-900 text-xs sm:text-base md:text-lg">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
+                        {effectivePrice && (
+                          <span className="text-[10px] sm:text-xs text-gray-400 line-through">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
+                        )}
+                      </>
+                    );
+                  }
+                  if (effectivePrice) {
+                    return <span className="font-bold text-gray-900 text-xs sm:text-base md:text-lg">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>;
+                  }
+                  return <span className="text-[10px] sm:text-xs font-semibold text-primary">Price on Request</span>;
+                })()}
+              </div>
             </div>
+            
+            <button 
+              onClick={handleAddToCart}
+              className="bg-dark hover:bg-primary text-white hover:text-dark p-1.5 sm:p-2 rounded-lg transition-all duration-300 shadow-xs shrink-0 cursor-pointer"
+              title="Add to Corporate Enquiry"
+            >
+              <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
           </div>
-          
-          <button 
-            onClick={handleAddToCart}
-            className="bg-dark hover:bg-primary text-white hover:text-dark p-1.5 sm:p-2.5 rounded-lg transition-all duration-300 shadow-xs shrink-0 cursor-pointer"
-            title="Add to Corporate Enquiry"
-          >
-            <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
+
+          {/* Luxury B2B Best Price Request Tag */}
+          <div className="flex items-center justify-between gap-1 px-2 py-1 rounded-md bg-amber-500/10 border border-amber-500/25 text-[8.5px] sm:text-[10px] font-semibold text-amber-900">
+            <span className="truncate flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0"></span>
+              <span>Request best price for quantity</span>
+            </span>
+            <span className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-amber-700 font-bold shrink-0 hidden xs:inline">
+              Bulk Rate
+            </span>
+          </div>
         </div>
         
         <Link 

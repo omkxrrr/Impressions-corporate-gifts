@@ -10912,7 +10912,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634401/67634401_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634401/67634401_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER INTERLOCK; 160GSM",
       "Colour: WHITE",
       "MRP: 1499",
@@ -10942,7 +10944,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634402/67634402_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634402/67634402_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER INTERLOCK; 160GSM",
       "Colour: RED",
       "MRP: 1499",
@@ -10972,7 +10976,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634403/67634403_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634403/67634403_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER INTERLOCK; 160GSM",
       "Colour: SODALITE BLUE",
       "MRP: 1499",
@@ -11002,7 +11008,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634404/67634404_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634404/67634404_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER INTERLOCK; 160GSM",
       "Colour: PEACOAT",
       "MRP: 1499",
@@ -11032,7 +11040,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634405/67634405_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67634405/67634405_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER INTERLOCK; 160GSM",
       "Colour: Black",
       "MRP: 1499",
@@ -11062,7 +11072,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727401/62727401_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727401/62727401_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE; 220GSM",
       "Colour: BLACK",
       "MRP: 1899",
@@ -11092,7 +11104,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727402/62727402_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727402/62727402_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE; 220GSM",
       "Colour: WHITE",
       "MRP: 1899",
@@ -11122,7 +11136,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727403/62727403_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727403/62727403_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE; 220GSM",
       "Colour: M.GREY HEATHER",
       "MRP: 1899",
@@ -11152,7 +11168,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727406/62727406_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727406/62727406_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE; 220GSM",
       "Colour: PEACOAT",
       "MRP: 1899",
@@ -11182,7 +11200,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727411/62727411_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/62727411/62727411_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED; 220GSM",
       "Colour: RED",
       "MRP: 1899",
@@ -11198,21 +11218,23 @@
   },
   {
     "id": 376,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67673199",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67673199",
-    "description": "ESS PIQUE TIPPING POLO in BLACK-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in BLACK-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67673199",
+    "description": "PUMA ESS PIQUE TIPPING POLO in BLACK-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in BLACK-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67673199/67673199.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67673199/67673199_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67673199/67673199_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: BLACK-WHITE",
       "MRP: 2199",
@@ -11228,21 +11250,23 @@
   },
   {
     "id": 377,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67677501",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67677501",
-    "description": "ESS PIQUE TIPPING POLO in BLACK-ZINFANDEL, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in BLACK-ZINFANDEL, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67677501",
+    "description": "PUMA ESS PIQUE TIPPING POLO in BLACK-ZINFANDEL, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in BLACK-ZINFANDEL, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677501/67677501.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677501/67677501_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677501/67677501_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: BLACK-ZINFANDEL",
       "MRP: 2199",
@@ -11259,21 +11283,23 @@
   },
   {
     "id": 378,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67677502",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67677502",
-    "description": "ESS PIQUE TIPPING POLO in WHITE-SODALITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in WHITE-SODALITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67677502",
+    "description": "PUMA ESS PIQUE TIPPING POLO in WHITE-SODALITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in WHITE-SODALITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677502/67677502.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677502/67677502_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677502/67677502_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: WHITE-SODALITE",
       "MRP: 2199",
@@ -11289,21 +11315,23 @@
   },
   {
     "id": 379,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67677503",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67677503",
-    "description": "ESS PIQUE TIPPING POLO in GREY HEATHER-BLACK, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in GREY HEATHER-BLACK, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
+    "slug": "puma-ess-pique-tipping-polo-67677503",
+    "description": "PUMA ESS PIQUE TIPPING POLO in GREY HEATHER-BLACK, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in GREY HEATHER-BLACK, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677503/67677503.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677503/67677503_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677503/67677503_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: GREY HEATHER-BLACK",
       "MRP: 2199",
@@ -11319,21 +11347,23 @@
   },
   {
     "id": 380,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67677506",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67677506",
-    "description": "ESS PIQUE TIPPING POLO in PEACOAT-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in PEACOAT-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67677506",
+    "description": "PUMA ESS PIQUE TIPPING POLO in PEACOAT-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in PEACOAT-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677506/67677506.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677506/67677506_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677506/67677506_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: PEACOAT-WHITE",
       "MRP: 2199",
@@ -11349,21 +11379,23 @@
   },
   {
     "id": 381,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67677527",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67677527",
-    "description": "ESS PIQUE TIPPING POLO in SODALITE-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in SODALITE-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67677527",
+    "description": "PUMA ESS PIQUE TIPPING POLO in SODALITE-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in SODALITE-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677527/67677527.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677527/67677527_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67677527/67677527_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: SODALITE-WHITE",
       "MRP: 2199",
@@ -11379,21 +11411,23 @@
   },
   {
     "id": 382,
-    "name": "ESS PIQUE TIPPING POLO",
+    "name": "PUMA ESS PIQUE TIPPING POLO",
     "sku": "67138811",
     "price": null,
     "salePrice": null,
     "stock": 0,
     "isActive": true,
-    "slug": "ess-pique-tipping-polo-67138811",
-    "description": "ESS PIQUE TIPPING POLO in RED-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
-    "shortDescription": "ESS PIQUE TIPPING POLO in RED-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "slug": "puma-ess-pique-tipping-polo-67138811",
+    "description": "PUMA ESS PIQUE TIPPING POLO in RED-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
+    "shortDescription": "PUMA ESS PIQUE TIPPING POLO in RED-WHITE, made of 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM.",
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67138811/67138811.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67138811/67138811_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67138811/67138811_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 60%-40% CTN-POLY;CIRCULAR KNITTED;PIQUE;220GSM",
       "Colour: RED-WHITE",
       "MRP: 2199",
@@ -11423,7 +11457,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728601/67728601_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728601/67728601_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER-POPLIN-WR: PFC-FREE; 85.00 GSM",
       "Colour: PEACOAT-WHITE",
       "MRP: 3699",
@@ -11452,7 +11488,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728602/67728602_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728602/67728602_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER-POPLIN-WR: PFC-FREE; 85.00 GSM",
       "Colour: BLACK-WHITE",
       "MRP: 3699",
@@ -11481,7 +11519,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728701/67728701_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728701/67728701_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER-POPLIN-WR: PFC-FREE; 85.00 GSM",
       "Colour: PEACOAT-WHITE",
       "MRP: 2899",
@@ -11509,7 +11549,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728702/67728702_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728702/67728702_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 100% POLYESTER-POPLIN-WR: PFC-FREE; 85.00 GSM",
       "Colour: BLACK-WHITE",
       "MRP: 2899",
@@ -11537,7 +11579,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723001/67723001_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723001/67723001_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 70% CTN 30% POLY;FRENCH TERRY 280 GSM",
       "Colour: BLACK",
       "MRP: 3999",
@@ -11566,7 +11610,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723002/67723002_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723002/67723002_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 70% CTN 30% POLY;FRENCH TERRY 280 GSM",
       "Colour: M.GREY HEATHER",
       "MRP: 3999",
@@ -11595,7 +11641,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723002-PEACOAT/67723002-PEACOAT_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67723002-PEACOAT/67723002-PEACOAT_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Fabric: 70% CTN 30% POLY;FRENCH TERRY 280 GSM",
       "Colour: PEACOAT",
       "MRP: 3999",
@@ -11624,7 +11672,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532901/02532901_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532901/02532901_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Colour: BLACK",
       "MRP: 1099"
     ],
@@ -11649,7 +11699,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532902/02532902_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532902/02532902_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Colour: NAVY",
       "MRP: 1099"
     ],
@@ -11674,7 +11726,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532903/02532903_2.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/02532903/02532903_3.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Colour: RED",
       "MRP: 1099"
     ],
@@ -11698,7 +11752,9 @@
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/07998001/07998001.jpg",
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/07998001/07998001_2.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Colour: BLACK-RED",
       "MRP: 1599"
     ],
@@ -11721,7 +11777,9 @@
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/05104101/05104101.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "Colour: BLACK",
       "MRP: 599",
       "Item: WATER BOTTLE"
@@ -11745,7 +11803,9 @@
     "images": [
       "https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/05398501/05398501.jpg"
     ],
+    "brand": "Puma",
     "features": [
+      "Brand: Puma",
       "MRP: 1999",
       "Item: ONE8 BAT-BALL"
     ],

@@ -3,8 +3,10 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useProducts } from '../context/ProductContext';
-import { Star, Truck, ArrowLeft, Shield, RefreshCw, Heart, ChevronRight } from 'lucide-react';
+import { Star, Truck, ArrowLeft, Shield, RefreshCw, Heart, ChevronRight, Sparkles } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
+import { BrandLogo, BrandCornerBadge } from '../components/BrandLogo';
+import { detectBrand } from '../utils/catalogCategories';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -96,6 +98,7 @@ const ProductDetails = () => {
                 className="w-full h-full object-contain object-center transform group-hover:scale-110 transition-transform duration-700 origin-center bg-white"
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/800?text=Product+Image' }}
               />
+              <BrandCornerBadge product={product} position="top-left" />
             </div>
             {product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-4">
@@ -114,12 +117,24 @@ const ProductDetails = () => {
 
           <div className="lg:w-1/2 flex flex-col">
             <div className="flex justify-between items-start mb-2">
-              <div className="text-sm text-primary font-semibold uppercase tracking-wider">
-                {product.category}
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs sm:text-sm text-primary font-bold uppercase tracking-wider">
+                  {product.category}
+                </span>
+                {(() => {
+                  const brand = detectBrand(product);
+                  if (!brand || brand === 'Unbranded' || brand === 'Corporate Collection') return null;
+                  return (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-dark text-amber-300 text-xs font-bold tracking-wider uppercase border border-primary/30 shadow-xs">
+                      <BrandLogo brand={brand} size="xs" />
+                      <span>{brand}</span>
+                    </span>
+                  );
+                })()}
               </div>
               <button 
                 onClick={(e) => { e.preventDefault(); toggleWishlist(product); }}
-                className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors"
+                className="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
                 title="Toggle Wishlist"
               >
                 <Heart className={`w-6 h-6 transition-colors ${isInWishlist(product.id) ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'}`} />
@@ -131,52 +146,96 @@ const ProductDetails = () => {
               {product.description}
             </p>
 
-            {/* Price Block */}
-            <div className="mb-6">
-              {(() => {
-                const effectivePrice = product.price || (() => {
-                  const mrp = product.features?.find(f => typeof f === 'string' && f.toLowerCase().includes('mrp'));
-                  if (mrp) {
-                    const match = mrp.match(/(\d+[\d,.]*)/);
-                    return match ? match[1].replace(/,/g, '') : null;
-                  }
-                  return null;
-                })();
+            {/* Price Block with B2B Volume Pricing Callout */}
+            <div className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/25">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-900 border border-amber-500/30 inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                  Corporate B2B Catalog
+                </span>
+                <span className="text-xs text-gray-500 font-medium">Indicative MRP / Reference</span>
+              </div>
 
-                if (product.salePrice) {
-                  return (
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl font-bold text-gray-900">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
-                      {effectivePrice && (
-                        <span className="text-xl text-gray-400 line-through">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
-                      )}
-                      {effectivePrice && (
-                        <span className="text-sm font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">
-                          {Math.round(((effectivePrice - product.salePrice) / effectivePrice) * 100)}% OFF
-                        </span>
-                      )}
-                    </div>
-                  );
-                }
-                if (effectivePrice) {
-                  return <div className="text-3xl font-bold text-gray-900">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</div>;
-                }
-                return <div className="text-xl font-medium text-gray-500">Price on Request</div>;
-              })()}
+              <div className="my-2.5">
+                {(() => {
+                  const effectivePrice = product.price || (() => {
+                    const mrp = product.features?.find(f => typeof f === 'string' && f.toLowerCase().includes('mrp'));
+                    if (mrp) {
+                      const match = mrp.match(/(\d+[\d,.]*)/);
+                      return match ? match[1].replace(/,/g, '') : null;
+                    }
+                    return null;
+                  })();
+
+                  if (product.salePrice) {
+                    return (
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl sm:text-4xl font-bold text-gray-900">₹{parseFloat(product.salePrice).toLocaleString('en-IN')}</span>
+                        {effectivePrice && (
+                          <span className="text-xl text-gray-400 line-through">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
+                        )}
+                        {effectivePrice && (
+                          <span className="text-xs font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
+                            {Math.round(((effectivePrice - product.salePrice) / effectivePrice) * 100)}% OFF
+                          </span>
+                        )}
+                      </div>
+                    );
+                  }
+                  if (effectivePrice) {
+                    return (
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl sm:text-4xl font-bold text-gray-900">₹{parseFloat(effectivePrice).toLocaleString('en-IN')}</span>
+                        <span className="text-xs text-gray-500 font-medium">/ unit baseline MRP</span>
+                      </div>
+                    );
+                  }
+                  return <div className="text-2xl font-bold text-primary">Price on Request</div>;
+                })()}
+              </div>
+
+              {/* Volume Request Notice */}
+              <div className="pt-3 border-t border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-700">
+                <div className="flex items-center gap-2 font-semibold text-amber-950">
+                  <Sparkles className="w-4 h-4 text-primary shrink-0" />
+                  <span>Request for best price on quantity (Tiered Bulk Rates)</span>
+                </div>
+                <span className="text-[11px] text-gray-500 font-medium">Bulk discounts for 25, 50, 100, 500+ pcs</span>
+              </div>
             </div>
 
+            {/* Quantity Selector with Quick Bulk Presets */}
             <div className="mb-8">
-              <span className="block text-sm font-medium text-gray-700 mb-2">Quantity</span>
-              <div className="flex items-center border border-gray-300 rounded-md w-32">
-                <button 
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-md w-1/3"
-                >-</button>
-                <span className="flex-1 text-center font-medium border-x border-gray-300 py-2">{quantity}</span>
-                <button 
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-md w-1/3"
-                >+</button>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-semibold text-gray-800">Estimated Quantity</span>
+                <span className="text-xs text-primary font-medium">Bulk tiers available</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center border border-gray-300 rounded-lg w-32 bg-white">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-l-lg w-1/3 transition"
+                  >-</button>
+                  <span className="flex-1 text-center font-bold border-x border-gray-300 py-2 text-sm">{quantity}</span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-r-lg w-1/3 transition"
+                  >+</button>
+                </div>
+
+                {/* Quick Corporate Volume Chips */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {[25, 50, 100, 250, 500].map((tier) => (
+                    <button
+                      key={tier}
+                      type="button"
+                      onClick={() => setQuantity(tier)}
+                      className={`text-xs font-semibold px-3 py-2 rounded-lg border transition-all ${quantity === tier ? 'bg-dark text-amber-300 border-dark shadow-xs' : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary/60 hover:bg-white'}`}
+                    >
+                      {tier} pcs
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
             

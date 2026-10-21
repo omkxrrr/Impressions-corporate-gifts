@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import { BrandLogo } from '../components/BrandLogo';
 import { useProducts } from '../context/ProductContext';
 import { Filter, X, Search, Sparkles, Tag, Check, Layers, Shirt, Briefcase, Activity, ShieldCheck } from 'lucide-react';
 import { 
@@ -172,12 +173,18 @@ const Shop = () => {
         )}
 
         {/* Page Header */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-gray-200">
+        <div className="mb-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-gray-200">
             <div>
-              <span className="text-xs uppercase tracking-[0.25em] font-bold text-primary block mb-2">Corporate Gifting Catalog</span>
-              <h1 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900">Apparel & Merchandising Collections</h1>
-              <p className="text-gray-500 text-sm mt-1">Browse category-wise styles across India's leading fashion houses.</p>
+              <span className="text-xs uppercase tracking-[0.25em] font-bold text-primary block mb-1.5">Corporate Gifting Catalog</span>
+              <h1 className="text-2xl sm:text-4xl font-serif font-bold text-gray-900">Apparel & Merchandising Collections</h1>
+              <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-gray-600">
+                <span className="inline-flex items-center gap-1.5 font-semibold text-amber-900 bg-amber-50 border border-amber-200/80 px-2.5 py-1 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                  Corporate B2B Wholesale
+                </span>
+                <span className="text-gray-500">• Indicative MRPs shown • Request best price for bulk quantity</span>
+              </div>
             </div>
             
             {/* Search Input */}
@@ -293,7 +300,12 @@ const Shop = () => {
                           : 'bg-white/5 hover:bg-white/15 text-gray-200 border border-white/10'
                       }`}
                     >
-                      {isSelected && <Check className="w-3 h-3 text-dark" />}
+                      {isSelected && <Check className="w-3 h-3 text-dark shrink-0" />}
+                      {b.name !== 'All Brands' && (
+                        <span className={`shrink-0 flex items-center ${isSelected ? 'text-dark' : 'text-amber-300'}`}>
+                          <BrandLogo brand={b.name} size="xs" />
+                        </span>
+                      )}
                       <span>{b.name}</span>
                       <span className={`text-[10px] px-1.5 py-0.2 rounded font-bold ${
                         isSelected ? 'bg-dark text-white' : 'bg-white/10 text-gray-400'

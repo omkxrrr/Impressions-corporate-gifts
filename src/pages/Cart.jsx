@@ -58,6 +58,10 @@ const Cart = () => {
                         <div className="mt-1 text-sm font-semibold text-gray-900">
                           {item.salePrice ? `₹${parseFloat(item.salePrice).toLocaleString('en-IN')}` : item.price ? `₹${parseFloat(item.price).toLocaleString('en-IN')}` : 'Price on Request'}
                         </div>
+                        <div className="text-[10px] text-amber-800 font-medium flex items-center gap-1 mt-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+                          <span>Indicative MRP • Best rate on quotation</span>
+                        </div>
                         <div className="mt-2 flex items-center justify-between sm:hidden">
                           <button 
                             onClick={() => removeFromCart(item.id)}

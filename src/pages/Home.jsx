@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import { BrandLogo } from '../components/BrandLogo';
 import { useProducts } from '../context/ProductContext';
 import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles, Shirt, Briefcase, Activity, Layers } from 'lucide-react';
 import { matchesBrand, detectBrand, matchesSubCatalog } from '../utils/catalogCategories';
@@ -67,7 +68,9 @@ const Home = () => {
       },
       'Puma': {
         categoryNote: 'Activewear & Athleisure',
-        defaultCount: 18
+        preferredSku: '67728601',
+        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728601/67728601.jpg',
+        defaultCount: 30
       },
       'Nike': {
         categoryNote: 'Performance Sportswear',
@@ -377,9 +380,12 @@ const Home = () => {
                                 <Link
                                   key={bName}
                                   to={`/shop?subcatalog=${cat.id}&brand=${encodeURIComponent(bName)}`}
-                                  className="text-[11px] font-medium px-3 py-1 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary hover:text-dark text-gray-300 border border-white/10 hover:border-transparent transition-all shadow-xs"
+                                  className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary hover:text-dark text-gray-300 border border-white/10 hover:border-transparent transition-all shadow-xs inline-flex items-center gap-1.5"
                                 >
-                                  {bName}
+                                  <span className="shrink-0 text-amber-300">
+                                    <BrandLogo brand={bName} size="xs" />
+                                  </span>
+                                  <span>{bName}</span>
                                 </Link>
                               ))}
                             </div>
@@ -479,9 +485,9 @@ const Home = () => {
                     
                     {/* Top Badges */}
                     <div className="absolute top-3 left-3 z-10">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-amber-900 bg-amber-50/95 px-2.5 py-1 rounded-full border border-amber-300 shadow-xs backdrop-blur-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                        Official Brand
+                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-dark bg-white/95 px-2.5 py-1 rounded-full border border-gray-200/90 shadow-xs backdrop-blur-sm">
+                        <BrandLogo brand={brand.title} size="xs" />
+                        <span>{brand.title}</span>
                       </span>
                     </div>
                     <div className="absolute top-3 right-3 z-10">
@@ -493,13 +499,18 @@ const Home = () => {
 
                   {/* Executive Dark Card Base */}
                   <div className="p-5 flex-grow flex items-center justify-between bg-[#0e1117] text-white border-t border-white/10 group-hover:bg-[#141822] transition-colors">
-                    <div>
-                      <div className="text-[10px] text-amber-300 font-semibold uppercase tracking-wider mb-1">
-                        {brand.categoryNote}
+                    <div className="flex items-center gap-3">
+                      <div className="shrink-0 text-amber-300">
+                        <BrandLogo brand={brand.title} size="md" />
                       </div>
-                      <h3 className="font-serif text-2xl font-bold text-white group-hover:text-primary transition-colors tracking-wide">
-                        {brand.title}
-                      </h3>
+                      <div>
+                        <div className="text-[10px] text-amber-300 font-semibold uppercase tracking-wider mb-0.5">
+                          {brand.categoryNote}
+                        </div>
+                        <h3 className="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-primary transition-colors tracking-wide">
+                          {brand.title}
+                        </h3>
+                      </div>
                     </div>
                     <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-primary text-white group-hover:text-dark flex items-center justify-center transition-all duration-300 shrink-0">
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
