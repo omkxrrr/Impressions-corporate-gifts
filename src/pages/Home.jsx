@@ -185,7 +185,7 @@ const Home = () => {
             <img 
               src={activeBanner.bannerImg} 
               alt={activeBanner?.titlePrefix || "Festive Corporate Banner"} 
-              className="w-full h-auto min-h-[360px] sm:min-h-[460px] max-h-[700px] object-cover sm:object-contain lg:object-cover object-center transition-transform duration-700 group-hover:scale-[1.004]"
+              className="w-full h-auto block object-contain sm:object-cover sm:min-h-[460px] max-h-[700px] object-center transition-transform duration-700 group-hover:scale-[1.004]"
               style={{ 
                 imageRendering: '-webkit-optimize-contrast',
                 transform: 'translateZ(0)',
@@ -195,8 +195,8 @@ const Home = () => {
               fetchPriority="high"
             />
 
-            {/* Floating Action Pill Bar on the Bottom-Right Corner */}
-            <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-8 flex items-center gap-3 z-20">
+            {/* Desktop Floating Action Pill Bar on the Bottom-Right Corner */}
+            <div className="hidden sm:flex absolute bottom-4 sm:bottom-6 right-4 sm:right-8 items-center gap-3 z-20">
               <span className="px-5 py-2.5 rounded-full bg-black/65 hover:bg-black/85 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-2xl border border-white/20 transition-all">
                 <span>{activeBanner.ctaText || 'Explore Catalog'}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
@@ -211,9 +211,25 @@ const Home = () => {
             </div>
           </Link>
 
-          {/* Floating Slider Controls on the Bottom-Left */}
+          {/* Mobile Quick Action Buttons - Below the Banner (Zero overlap on Canva graphic) */}
+          <div className="flex sm:hidden items-center gap-2.5 p-3 bg-[#0d0d0d] border-t border-white/10">
+            <Link 
+              to={activeBanner?.ctaLink || '/shop'} 
+              className="flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 rounded-lg border border-white/15 transition-colors"
+            >
+              Explore Catalog →
+            </Link>
+            <a 
+              href="#enquire" 
+              className="flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-white bg-[#942024] hover:bg-[#7d191d] rounded-lg shadow-md transition-colors"
+            >
+              Request Quote
+            </a>
+          </div>
+
+          {/* Desktop Floating Slider Controls on the Bottom-Left */}
           {heroBanners.length > 1 && (
-            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 flex items-center gap-2.5 z-20 bg-black/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xl">
+            <div className="hidden sm:flex absolute bottom-4 sm:bottom-6 left-4 sm:left-8 items-center gap-2.5 z-20 bg-black/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xl">
               <button
                 type="button"
                 onClick={prevSlide}
@@ -246,6 +262,23 @@ const Home = () => {
               <span className="text-[10px] text-white/80 font-mono tracking-wider ml-1 select-none">
                 0{currentSlide + 1} / 0{heroBanners.length}
               </span>
+            </div>
+          )}
+
+          {/* Mobile Dot Indicators */}
+          {heroBanners.length > 1 && (
+            <div className="flex sm:hidden justify-center items-center gap-1.5 py-2 bg-[#0d0d0d] border-t border-white/5">
+              {heroBanners.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    currentSlide === idx ? 'w-5 bg-amber-400' : 'w-2 bg-white/30'
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
             </div>
           )}
         </section>
@@ -370,24 +403,30 @@ const Home = () => {
         </section>
       )}
 
-      {/* 2. Executive Corporate Trust Stats Bar */}
-      <section className="bg-[#942024] text-white py-6 border-b border-[#7a181c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-white/20 text-center">
+      {/* 2. Executive Corporate Trust Stats Bar - Sleek 3-Column Ribbon on Mobile & Desktop */}
+      <section className="bg-[#942024] text-white py-3 sm:py-6 border-b border-[#7a181c]">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-3 divide-x divide-white/20 text-center">
             
-            <div className="pt-2 sm:pt-0 px-4">
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">4,000+</div>
-              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">pin codes served across India</div>
+            <div className="px-1 sm:px-4">
+              <div className="text-base sm:text-3xl lg:text-4xl font-extrabold tracking-tight">4,000+</div>
+              <div className="text-[10px] sm:text-sm text-white/85 font-light leading-tight mt-0.5 sm:mt-1">
+                Pin Codes Served
+              </div>
             </div>
 
-            <div className="pt-2 sm:pt-0 px-4">
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">500+</div>
-              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">corporate brands trust impressions</div>
+            <div className="px-1 sm:px-4">
+              <div className="text-base sm:text-3xl lg:text-4xl font-extrabold tracking-tight">500+</div>
+              <div className="text-[10px] sm:text-sm text-white/85 font-light leading-tight mt-0.5 sm:mt-1">
+                Corporate Brands
+              </div>
             </div>
 
-            <div className="pt-2 sm:pt-0 px-4">
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">50,000+</div>
-              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">gifts shipped to corporates</div>
+            <div className="px-1 sm:px-4">
+              <div className="text-base sm:text-3xl lg:text-4xl font-extrabold tracking-tight">50,000+</div>
+              <div className="text-[10px] sm:text-sm text-white/85 font-light leading-tight mt-0.5 sm:mt-1">
+                Gifts Delivered
+              </div>
             </div>
 
           </div>
