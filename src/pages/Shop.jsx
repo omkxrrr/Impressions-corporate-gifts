@@ -122,8 +122,8 @@ const Shop = () => {
       }
     });
 
-    // Also check known brand aliases for any products in relevantProducts
-    const priority = ['Jack & Jones', 'Monte Carlo', 'Rare Rabbit', 'Reebok', 'Scott International', 'UCB (Benetton)', 'French Connection', 'Arrow', 'Adidas', 'Puma', 'Nike'];
+    // Only the verified 10 brands in clean priority order
+    const priority = ['Puma', 'Adidas', 'Reebok', 'Scott International', 'Rare Rabbit', 'Jack & Jones', 'Monte Carlo', 'French Connection', 'UCB (Benetton)', 'Arrow'];
     
     // Build combined list
     const brandsFound = new Set([...priority, ...Array.from(brandCounts.keys())]);

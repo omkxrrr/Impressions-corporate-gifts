@@ -1,537 +1,519 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { BrandLogo } from '../components/BrandLogo';
 import { useProducts } from '../context/ProductContext';
-import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles, Shirt, Briefcase, Activity, Layers } from 'lucide-react';
+import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles, Shirt, Briefcase, Activity, Layers, ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 import { matchesBrand, detectBrand, matchesSubCatalog } from '../utils/catalogCategories';
+import { getHeroBanners, DEFAULT_BANNERS } from '../services/bannerService';
 
 const Home = () => {
   const { products } = useProducts();
+  const [heroBanners, setHeroBanners] = useState(DEFAULT_BANNERS);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Dynamic brand partners for the marquee slider
-  const dynamicBrandPartners = useMemo(() => {
+  // Fetch live banners dynamically from cloud/localStorage (uploaded from admin panel)
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadLiveBanners = () => {
+      getHeroBanners().then((loaded) => {
+        if (isMounted && Array.isArray(loaded) && loaded.length > 0) {
+          const activeOnly = loaded.filter(b => b.isActive !== false);
+          setHeroBanners(activeOnly.length > 0 ? activeOnly : loaded);
+        }
+      });
+    };
+
+    loadLiveBanners();
+
+    // Listen for instant updates when banners are added/changed in admin
+    window.addEventListener('impressions_banners_updated', loadLiveBanners);
+    window.addEventListener('storage', loadLiveBanners);
+
+    return () => { 
+      isMounted = false;
+      window.removeEventListener('impressions_banners_updated', loadLiveBanners);
+      window.removeEventListener('storage', loadLiveBanners);
+    };
+  }, []);
+
+  // Auto-play timer for hero banner slider (rotates every 6 seconds)
+  useEffect(() => {
+    if (isPaused || heroBanners.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroBanners.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [isPaused, heroBanners.length]);
+
+  const activeBanner = (heroBanners && heroBanners[currentSlide]) 
+    || (heroBanners && heroBanners[0]) 
+    || DEFAULT_BANNERS[0] 
+    || {};
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroBanners.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroBanners.length) % heroBanners.length);
+  };
+
+  // Dynamic brand partners for the marquee slider (STRICTLY only brands added in store)
+  const activeStoreBrands = useMemo(() => {
     const BRAND_METADATA = {
-      'Jack & Jones': {
-        categoryNote: 'Polos, Tees & Jackets',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue//P28.jpg',
-        defaultCount: 42
-      },
-      'Monte Carlo': {
-        categoryNote: 'Oxford Shirts & Knitwear',
-        preferredSku: 'P38',
-        preferredFilter: (p) => p.sku === 'P38' || (p.name && p.name.toLowerCase().includes('oxford shirt')),
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/P38/P38.jpg',
-        zoomClass: 'w-full h-full object-cover scale-[2.4] object-center group-hover:scale-[2.55]',
-        defaultCount: 38
-      },
-      'UCB (Benetton)': {
-        categoryNote: 'Polo T-Shirts & Casuals',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/UCB001/UCB001.jpg',
-        defaultCount: 16
-      },
-      'French Connection': {
-        categoryNote: 'Premium Shirts & Polos',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/FC-P05-01/FC-P05-01.jpg',
-        defaultCount: 28
-      },
-      'Arrow': {
-        categoryNote: 'Executive Formal Wear',
-        preferredFilter: (p) => (p.sku && p.sku.startsWith('ARIK')) || (p.name && p.name.toLowerCase().includes('tipping')),
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/ARIK7032/ARIK7032.jpg',
-        zoomClass: 'w-full h-full object-cover scale-[2.2] object-center group-hover:scale-[2.35]',
-        defaultCount: 14
+      'Puma': {
+        categoryNote: 'Activewear & Athleisure',
+        defaultCount: 30
       },
       'Adidas': {
         categoryNote: 'Sports Tech & Trackwear',
-        preferredFilter: (p) => p.name && (p.name.toLowerCase().includes('poly cotton tshirt') || p.name.toLowerCase().includes('tipping tshirt') || p.name.toLowerCase().includes('dryfit tshirt')),
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/CD1486/CD1486.jpg',
         defaultCount: 56
-      },
-      'Rare Rabbit': {
-        categoryNote: 'Designer Polos & Formal Shirts',
-        preferredSku: 'RR-P09',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/RR-P09/RR-P09.jpg',
-        defaultCount: 33
       },
       'Reebok': {
         categoryNote: 'Performance Polos & Athletic Jackets',
-        preferredSku: 'INPS00101',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/INPS00101/INPS00101.jpg',
         defaultCount: 33
       },
       'Scott International': {
         categoryNote: 'Premium Tipped Polos & Bio-Wash Tees',
-        preferredSku: 'SP-1',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/SP-1/SP-1.jpg',
         defaultCount: 27
       },
-      'Puma': {
-        categoryNote: 'Activewear & Athleisure',
-        preferredSku: '67728601',
-        fallbackImg: 'https://dcvqsfwoodnotkujbbyj.supabase.co/storage/v1/object/public/products/catalogue/67728601/67728601.jpg',
-        defaultCount: 30
+      'Rare Rabbit': {
+        categoryNote: 'Designer Polos & Formal Shirts',
+        defaultCount: 33
       },
-      'Nike': {
-        categoryNote: 'Performance Sportswear',
-        defaultCount: 22
+      'Jack & Jones': {
+        categoryNote: 'Polos, Tees & Jackets',
+        defaultCount: 42
+      },
+      'Monte Carlo': {
+        categoryNote: 'Oxford Shirts & Knitwear',
+        defaultCount: 38
+      },
+      'French Connection': {
+        categoryNote: 'Premium Shirts & Polos',
+        defaultCount: 28
+      },
+      'UCB (Benetton)': {
+        categoryNote: 'Polo T-Shirts & Casuals',
+        defaultCount: 16
+      },
+      'Arrow': {
+        categoryNote: 'Executive Formal Wear',
+        defaultCount: 14
       }
     };
 
-    const brandsMap = new Map();
+    // Canonical order for user's verified store brands
+    const KNOWN_STORE_ORDER = [
+      'Puma',
+      'Adidas',
+      'Reebok',
+      'Scott International',
+      'Rare Rabbit',
+      'Jack & Jones',
+      'Monte Carlo',
+      'French Connection',
+      'UCB (Benetton)',
+      'Arrow'
+    ];
 
-    // 1. Seed with known partner houses
-    Object.keys(BRAND_METADATA).forEach(bName => {
-      brandsMap.set(bName, {
-        title: bName,
-        ...BRAND_METADATA[bName]
-      });
-    });
-
-    // 2. Discover any newly imported brands dynamically from database products
+    // Count products per brand dynamically from store catalog
+    const brandCounts = new Map();
     (products || []).forEach(p => {
-      const detected = detectBrand(p);
-      if (detected && detected !== 'Unbranded' && detected !== 'Corporate Collection' && !brandsMap.has(detected)) {
-        brandsMap.set(detected, {
-          title: detected,
-          categoryNote: 'Corporate Apparel & Merchandise',
-          defaultCount: 0
-        });
+      const b = detectBrand(p);
+      if (b && b !== 'Unbranded' && b !== 'Corporate Collection') {
+        brandCounts.set(b, (brandCounts.get(b) || 0) + 1);
       }
     });
 
-    // 3. Keep only active brands that have products or placeholders
-    return Array.from(brandsMap.values()).filter(b => {
-      const matchCount = (products || []).filter(p => matchesBrand(p, b.title)).length;
-      return matchCount > 0 || b.title === 'Puma' || b.title === 'Nike';
+    let detectedBrandNames = [];
+
+    if (brandCounts.size > 0) {
+      // 1. Include only known brands that have genuine products in store (count > 0)
+      const activeKnown = KNOWN_STORE_ORDER.filter(bName => {
+        const count = brandCounts.get(bName) || (products || []).filter(p => matchesBrand(p, bName)).length;
+        return count > 0;
+      });
+
+      // 2. Discover any newly added brands in database (excluding non-brands)
+      const additional = Array.from(brandCounts.keys()).filter(bName =>
+        !KNOWN_STORE_ORDER.includes(bName) && (brandCounts.get(bName) || 0) > 0
+      );
+
+      detectedBrandNames = [...activeKnown, ...additional];
+    } else {
+      // Initial render fallback before fetch settles - ONLY the user's 10 real brands
+      detectedBrandNames = KNOWN_STORE_ORDER;
+    }
+
+    return detectedBrandNames.map(title => {
+      const meta = BRAND_METADATA[title] || {};
+      const actualCount = brandCounts.get(title) || (products || []).filter(p => matchesBrand(p, title)).length;
+      return {
+        title,
+        categoryNote: meta.categoryNote || 'Official Corporate Partner',
+        count: actualCount || meta.defaultCount || 20
+      };
     });
   }, [products]);
+
+  // Brand Partners Rows for Animated Sliding Marquee (Splits user's active brands evenly)
+  const { row1Brands, row2Brands } = useMemo(() => {
+    if (!activeStoreBrands.length) return { row1Brands: [], row2Brands: [] };
+    const half = Math.ceil(activeStoreBrands.length / 2);
+    return {
+      row1Brands: activeStoreBrands.slice(0, half),
+      row2Brands: activeStoreBrands.slice(half)
+    };
+  }, [activeStoreBrands]);
 
   return (
     <div className="flex flex-col font-sans bg-white selection:bg-primary selection:text-dark">
       
-      {/* 1. Hero Banner - Modern Corporate Elite */}
-      <section className="relative bg-[#0c0e14] text-white min-h-[92vh] flex items-center overflow-hidden">
-        {/* Ambient Gold Radial Glows */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] pointer-events-none"></div>
-        <div className="absolute bottom-0 right-10 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[160px] pointer-events-none"></div>
-        
-        {/* Background Image with Dark Cinematic Vignette */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop" 
-            alt="Luxury Corporate Gifting Showcase" 
-            className="w-full h-full object-cover opacity-25 mix-blend-luminosity scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0e14] via-[#0c0e14]/85 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e14] via-transparent to-transparent"></div>
-        </div>
-        
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col lg:flex-row items-center justify-between gap-14">
-          <div className="lg:w-7/12">
-            
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/50 bg-primary/15 text-amber-300 font-bold tracking-[0.2em] uppercase text-xs mb-8 backdrop-blur-md shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>The Gold Standard in Corporate Gifting</span>
-            </div>
-            
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 text-white tracking-tight">
-              Architecting Lasting <br/>
-              <span className="bg-gradient-to-r from-amber-200 via-primary to-amber-500 bg-clip-text text-transparent italic font-serif">
-                Corporate Legacies
+      {/* 1. Hero Banner - Dual Mode: Ultra-HD Graphic Banner OR Editorial Typography Showcase */}
+      {activeBanner?.bannerImg ? (
+        <section 
+          className="relative w-full bg-[#0a0a0a] overflow-hidden select-none border-b border-amber-900/30"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Full-Bleed Graphic Banner - 100% Crisp Native Resolution with Zero Darkening Overlay */}
+          <Link to={activeBanner?.ctaLink || '/shop'} className="block relative w-full group cursor-pointer">
+            <img 
+              src={activeBanner.bannerImg} 
+              alt={activeBanner?.titlePrefix || "Festive Corporate Banner"} 
+              className="w-full h-auto min-h-[360px] sm:min-h-[460px] max-h-[700px] object-cover sm:object-contain lg:object-cover object-center transition-transform duration-700 group-hover:scale-[1.004]"
+              style={{ 
+                imageRendering: '-webkit-optimize-contrast',
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden'
+              }}
+              loading="eager"
+              fetchPriority="high"
+            />
+
+            {/* Floating Action Pill Bar on the Bottom-Right Corner */}
+            <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-8 flex items-center gap-3 z-20">
+              <span className="px-5 py-2.5 rounded-full bg-black/65 hover:bg-black/85 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-2xl border border-white/20 transition-all">
+                <span>{activeBanner.ctaText || 'Explore Catalog'}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
               </span>
-            </h1>
-            
-            <p className="text-base sm:text-xl text-gray-300 mb-10 max-w-xl font-light leading-relaxed">
-              Curated luxury apparel, bespoke leathercraft, and authorized global brand gifting suites tailored for India's foremost corporate leaders and delegations.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link 
-                to="/shop" 
-                className="group inline-flex items-center justify-center px-8 py-4 text-sm font-semibold tracking-wider uppercase text-dark bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white hover:text-dark transition-all duration-300 rounded-lg shadow-[0_4px_25px_rgba(203,152,52,0.35)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.4)] hover:-translate-y-0.5"
-              >
-                <span>Explore Catalog</span>
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </Link>
               <a 
                 href="#enquire" 
-                className="inline-flex items-center justify-center px-8 py-4 text-sm font-semibold tracking-wider uppercase text-white border border-white/20 hover:border-primary hover:bg-primary/10 backdrop-blur-md transition-all duration-300 rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+                className="px-5 py-2.5 rounded-full bg-[#942024] hover:bg-[#7a181c] text-white text-xs font-bold uppercase tracking-wider shadow-2xl border border-white/20 transition-all cursor-pointer"
               >
-                Request Proposal
+                Request Quote
               </a>
             </div>
+          </Link>
 
-            {/* Quick Trust Highlights */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-lg">
-              <div>
-                <div className="text-2xl font-bold text-white font-serif">500+</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Enterprise Clients</div>
+          {/* Floating Slider Controls on the Bottom-Left */}
+          {heroBanners.length > 1 && (
+            <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 flex items-center gap-2.5 z-20 bg-black/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-xl">
+              <button
+                type="button"
+                onClick={prevSlide}
+                className="w-6 h-6 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
+                title="Previous Slide"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <div className="flex items-center gap-1.5">
+                {heroBanners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                      currentSlide === idx ? 'w-5 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+                    }`}
+                    aria-label={`Slide ${idx + 1}`}
+                  />
+                ))}
               </div>
-              <div>
-                <div className="text-2xl font-bold text-white font-serif">100K+</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Gifts Curated</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white font-serif">100%</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Brand Authenticity</div>
-              </div>
+              <button
+                type="button"
+                onClick={nextSlide}
+                className="w-6 h-6 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
+                title="Next Slide"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[10px] text-white/80 font-mono tracking-wider ml-1 select-none">
+                0{currentSlide + 1} / 0{heroBanners.length}
+              </span>
             </div>
-
+          )}
+        </section>
+      ) : (
+        <section 
+          className="relative min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden bg-gray-900"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Subtle Ambient Background */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop" 
+              alt="Corporate Gifting" 
+              className="w-full h-full object-cover object-center scale-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent"></div>
           </div>
           
-          {/* Executive RFQ / Bulk Lead Card */}
-          <div className="lg:w-5/12 w-full max-w-md mx-auto lg:mx-0" id="enquire">
-            <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-primary/50 via-white/10 to-transparent shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
-              <div className="bg-[#12151e]/95 backdrop-blur-xl p-8 rounded-2xl text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-serif text-2xl font-bold text-white">Corporate Enquiry</h3>
-                  <span className="px-2.5 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-wider border border-primary/30">
-                    B2B Desk
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex items-center">
+            <div className="max-w-2xl w-full text-white">
+              
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-0.5 h-4 bg-white inline-block"></span>
+                <span className="text-white/90 text-xs sm:text-sm font-semibold uppercase tracking-widest">
+                  FOR CORPORATES &amp; ENTERPRISES
+                </span>
+              </div>
+
+              <h1 className="font-sans text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12] mb-4">
+                {activeBanner?.pillType === 'festive' ? (
+                  <>
+                    Diwali &amp; Corporate Gifts <br className="hidden sm:inline" />
+                    <span className="italic font-serif font-light text-amber-200">For Your Business</span>
+                  </>
+                ) : (
+                  <>
+                    Corporate Gifting <br className="hidden sm:inline" />
+                    <span className="italic font-serif font-light text-amber-200">For Your Team &amp; Clients</span>
+                  </>
+                )}
+              </h1>
+              
+              <p className="text-white/90 text-sm sm:text-lg leading-relaxed max-w-xl mb-8 font-light">
+                Premium custom branded hampers &amp; corporate merchandise delivered pan-India.
+              </p>
+              
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <a 
+                  href="#enquire" 
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide text-white bg-[#942024] hover:bg-[#7d191d] transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-95 cursor-pointer"
+                >
+                  Request a Quote
+                </a>
+                <a 
+                  href="https://wa.me/917620872092?text=Hello%20Impressions%20Team,%20I%20would%20like%20to%20enquire%20about%20corporate%20gifting%20catalog%20and%20pricing." 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold tracking-wide text-white bg-[#1a4441] hover:bg-[#123330] transition-all duration-300 shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-95 flex items-center gap-2 cursor-pointer"
+                >
+                  <PhoneCall className="w-4 h-4 text-emerald-300" />
+                  <span>WhatsApp Us</span>
+                </a>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm text-white/85 font-medium pt-1">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span>100% Quality Assurance</span>
+                </span>
+                <span className="text-white/40">•</span>
+                <span className="flex items-center gap-1.5">
+                  <span>Delivery within 2-4 days</span>
+                </span>
+                <span className="text-white/40 hidden sm:inline">•</span>
+                <span className="flex items-center gap-1.5">
+                  <span>Custom Logo Branding</span>
+                </span>
+              </div>
+
+              {heroBanners.length > 1 && (
+                <div className="flex items-center gap-3 mt-8 pt-4 border-t border-white/15 max-w-sm">
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={prevSlide}
+                      className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
+                      title="Previous Slide"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextSlide}
+                      className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
+                      title="Next Slide"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {heroBanners.map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setCurrentSlide(idx)}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          currentSlide === idx ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+                        }`}
+                        aria-label={`Slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[11px] text-white/70 font-mono tracking-wider ml-1">
+                    0{currentSlide + 1} / 0{heroBanners.length}
                   </span>
                 </div>
-                <p className="text-gray-400 mb-6 text-xs leading-relaxed">
-                  Request custom mockups, branded sample kits, and volume corporate rates within 2 business hours.
-                </p>
-                <form onSubmit={(e) => { 
-                  e.preventDefault(); 
-                  const fd = new FormData(e.target);
-                  const message = encodeURIComponent(`Hello Impressions Executive Team,\n\nI would like to request a bulk corporate gifting proposal.\n\n• Name: ${fd.get('name')}\n• Organization: ${fd.get('company')}\n• Contact: ${fd.get('phone')}\n• Work Email: ${fd.get('email')}\n\nPlease share your curated corporate catalog and volume pricing.`);
-                  window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
-                }} className="space-y-4">
-                  <div>
-                    <label className="block text-[11px] uppercase tracking-wider font-medium text-gray-400 mb-1.5">Executive Name</label>
-                    <input name="name" required type="text" placeholder="e.g. Rahul Sharma" className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-lg focus:outline-none focus:border-primary text-white text-sm placeholder-gray-500 transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] uppercase tracking-wider font-medium text-gray-400 mb-1.5">Company / Enterprise</label>
-                    <input name="company" required type="text" placeholder="e.g. Deloitte India" className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-lg focus:outline-none focus:border-primary text-white text-sm placeholder-gray-500 transition-colors" />
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[11px] uppercase tracking-wider font-medium text-gray-400 mb-1.5">Phone Number</label>
-                      <input name="phone" required type="tel" placeholder="+91 ..." className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-lg focus:outline-none focus:border-primary text-white text-sm placeholder-gray-500 transition-colors" />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] uppercase tracking-wider font-medium text-gray-400 mb-1.5">Work Email</label>
-                      <input name="email" required type="email" placeholder="name@company.com" className="w-full px-4 py-3 bg-white/5 border border-white/15 rounded-lg focus:outline-none focus:border-primary text-white text-sm placeholder-gray-500 transition-colors" />
-                    </div>
-                  </div>
-                  <button type="submit" className="w-full bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white hover:text-dark text-dark font-bold text-xs uppercase tracking-widest py-4 rounded-lg transition-all duration-300 mt-2 shadow-lg flex items-center justify-center gap-2">
-                    <span>Submit Executive Enquiry</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </form>
-              </div>
+              )}
+
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 2. Industry Leaders & Fortune 500 Trust Bar */}
-      <section className="bg-[#12151e] py-10 border-y border-white/10">
+      {/* 2. Executive Corporate Trust Stats Bar */}
+      <section className="bg-[#942024] text-white py-6 border-b border-[#7a181c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-primary-light text-xs font-bold uppercase tracking-[0.25em] mb-8">
-            Trusted By Procurement Heads at India's Foremost Enterprises
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 text-gray-400 font-serif font-bold text-xl md:text-2xl tracking-widest opacity-70">
-            <span className="hover:text-primary transition-colors cursor-default">TATA</span>
-            <span className="text-gray-700 font-sans font-light">|</span>
-            <span className="hover:text-primary transition-colors cursor-default">RELIANCE</span>
-            <span className="text-gray-700 font-sans font-light">|</span>
-            <span className="hover:text-primary transition-colors cursor-default">HDFC BANK</span>
-            <span className="text-gray-700 font-sans font-light">|</span>
-            <span className="hover:text-primary transition-colors cursor-default">INFOSYS</span>
-            <span className="text-gray-700 font-sans font-light">|</span>
-            <span className="hover:text-primary transition-colors cursor-default">WIPRO</span>
-            <span className="text-gray-700 font-sans font-light">|</span>
-            <span className="hover:text-primary transition-colors cursor-default">MAHINDRA</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Apparel Catalog & Sub-Catalogues (Category-Wise Gifting Portfolios) */}
-      <section className="py-28 bg-[#090b10] text-white relative overflow-hidden border-y border-white/10">
-        {/* Ambient Gold Radial Glows */}
-        <div className="absolute -top-24 left-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[160px] pointer-events-none"></div>
-        <div className="absolute -bottom-24 right-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-18">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/40 bg-primary/10 text-amber-300 font-bold tracking-[0.25em] uppercase text-xs mb-4 backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Executive Wardrobe Architecture</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-white/20 text-center">
+            
+            <div className="pt-2 sm:pt-0 px-4">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">4,000+</div>
+              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">pin codes served across India</div>
             </div>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight">
-              Curated Apparel & <span className="bg-gradient-to-r from-amber-200 via-primary to-amber-500 bg-clip-text text-transparent italic">Sub-Catalogues</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-amber-300 to-primary mx-auto mt-5 rounded-full"></div>
-            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto mt-4 font-light leading-relaxed">
-              Architected for corporate delegations, leadership summits, and bespoke gifting. Select any tier to explore verified brand styles.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-            {[
-              {
-                id: 't-shirts',
-                suiteNo: 'SUITE 01',
-                subBadge: 'TACTILE KNITWEAR',
-                title: 'T-Shirts & Polos',
-                shortCta: 'Polos & Tees',
-                IconComp: Shirt,
-                image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop',
-                tagline: 'Polo shirts, dryfit technical tees, tipping collars & bespoke casuals.',
-                brands: ['Jack & Jones', 'UCB (Benetton)', 'Arrow', 'Monte Carlo', 'Adidas', 'French Connection']
-              },
-              {
-                id: 'shirts',
-                suiteNo: 'SUITE 02',
-                subBadge: 'FORMAL TAILORING',
-                title: 'Formal & Oxford Shirts',
-                shortCta: 'Oxford Shirts',
-                IconComp: Briefcase,
-                image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?q=80&w=800&auto=format&fit=crop',
-                tagline: '100% Egyptian Oxford, Giza Gilt, woven executive & presidential shirts.',
-                brands: ['Monte Carlo', 'Arrow', 'French Connection', 'Jack & Jones']
-              },
-              {
-                id: 'pants',
-                suiteNo: 'SUITE 03',
-                subBadge: 'PERFORMANCE BOTTOMS',
-                title: 'Pants & Tracksuits',
-                shortCta: 'Track & Pants',
-                IconComp: Activity,
-                image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=800&auto=format&fit=crop',
-                tagline: 'Executive track suits, active joggers, corporate chinos & bespoke trousers.',
-                brands: ['Monte Carlo', 'Adidas', 'Puma']
-              },
-              {
-                id: 'jackets',
-                suiteNo: 'SUITE 04',
-                subBadge: 'OUTERWEAR & SUEDE',
-                title: 'Jackets & Outerwear',
-                shortCta: 'Outerwear Suite',
-                IconComp: ShieldCheck,
-                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop',
-                tagline: 'Bespoke suede jackets, winterwear, hoodies, corporate blazers & coats.',
-                brands: ['Jack & Jones', 'Monte Carlo', 'French Connection']
-              }
-            ].map((cat) => {
-              const IconComponent = cat.IconComp;
-              return (
-                <div 
-                  key={cat.id}
-                  className="group relative rounded-3xl overflow-hidden bg-[#11141e] border border-white/10 hover:border-primary/70 shadow-[0_16px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_24px_60px_rgba(203,152,52,0.22)] transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2"
-                >
-                  {/* Visual Editorial Header with High Fashion Photo */}
-                  <div className="relative h-52 w-full overflow-hidden bg-[#0c0e14]">
-                    <img 
-                      src={cat.image} 
-                      alt={cat.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-75 group-hover:opacity-95" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#11141e] via-[#11141e]/50 to-transparent"></div>
-                    
-                    {/* Suite Header Badges */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                      <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-amber-300 bg-black/70 px-3 py-1 rounded-full border border-amber-500/30 backdrop-blur-md shadow-sm">
-                        {cat.suiteNo}
-                      </span>
-                      <div className="w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-amber-300 flex items-center justify-center shadow-md group-hover:border-primary group-hover:text-primary transition-all duration-300">
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                    </div>
-                  </div>
+            <div className="pt-2 sm:pt-0 px-4">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">500+</div>
+              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">corporate brands trust impressions</div>
+            </div>
 
-                  {/* Card Content Base */}
-                  <div className="p-6 pt-1 flex flex-col flex-grow justify-between relative z-10">
-                    <div>
-                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-1.5">
-                        {cat.subBadge}
-                      </div>
-                      <h3 className="font-serif text-2xl font-bold text-white mb-2 group-hover:text-amber-200 transition-colors tracking-wide">
-                        {cat.title}
-                      </h3>
-                      <p className="text-xs text-gray-400 mb-6 leading-relaxed font-light">
-                        {cat.tagline}
-                      </p>
+            <div className="pt-2 sm:pt-0 px-4">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">50,000+</div>
+              <div className="text-xs sm:text-sm text-white/85 font-light mt-1">gifts shipped to corporates</div>
+            </div>
 
-                      {/* Brand Chips Inside this Sub-Catalog */}
-                      {(() => {
-                        const activeSuiteBrands = dynamicBrandPartners
-                          .map(b => b.title)
-                          .filter(bTitle => (products || []).some(p => matchesSubCatalog(p, cat.id) && matchesBrand(p, bTitle)));
-                        const brandsToShow = activeSuiteBrands.length > 0 ? activeSuiteBrands : cat.brands;
-
-                        return (
-                          <div className="mb-6 pt-4 border-t border-white/10">
-                            <div className="flex items-center justify-between mb-2.5">
-                              <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                                Partner Houses
-                              </span>
-                              <span className="text-[10px] text-amber-300 font-semibold">
-                                {brandsToShow.length} Brands
-                              </span>
-                            </div>
-                            <div className="flex flex-wrap gap-1.5">
-                              {brandsToShow.map((bName) => (
-                                <Link
-                                  key={bName}
-                                  to={`/shop?subcatalog=${cat.id}&brand=${encodeURIComponent(bName)}`}
-                                  className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/5 hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary hover:text-dark text-gray-300 border border-white/10 hover:border-transparent transition-all shadow-xs inline-flex items-center gap-1.5"
-                                >
-                                  <span className="shrink-0 text-amber-300">
-                                    <BrandLogo brand={bName} size="xs" />
-                                  </span>
-                                  <span>{bName}</span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      })()}
-                    </div>
-
-                    {/* Luxury Gold CTA Button */}
-                    <Link
-                      to={`/shop?subcatalog=${cat.id}`}
-                      className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white text-dark font-bold text-xs uppercase tracking-wider text-center transition-all duration-300 flex items-center justify-between group/btn shadow-[0_4px_20px_rgba(203,152,52,0.3)] hover:shadow-[0_6px_25px_rgba(255,255,255,0.4)]"
-                    >
-                      <span>Explore {cat.shortCta}</span>
-                      <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>
 
-      {/* 4. Authorized Brand Portfolios - Continuous Animated Sliding Track */}
-      <section className="py-24 bg-white relative overflow-hidden">
+
+
+      {/* 3. Premier Brand Partners - Continuous Animated Sliding Track */}
+      <section className="py-20 bg-gradient-to-b from-[#fdfbf7] via-[#faf8f5] to-white relative overflow-hidden border-b border-amber-200/50">
         <style>{`
-          @keyframes brandSlideTrack {
+          @keyframes brandScrollLeft {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
           }
-          .animate-brand-slide {
+          @keyframes brandScrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+          .animate-brand-track-left {
             display: flex;
             width: max-content;
-            animation: brandSlideTrack 36s linear infinite;
+            animation: brandScrollLeft 34s linear infinite;
           }
-          .animate-brand-slide:hover {
+          .animate-brand-track-right {
+            display: flex;
+            width: max-content;
+            animation: brandScrollRight 34s linear infinite;
+          }
+          .animate-brand-track-left:hover,
+          .animate-brand-track-right:hover {
             animation-play-state: paused;
           }
         `}</style>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between">
-            <div>
-              <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">Authorized Distribution</span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-dark">Premier Brand Partners</h2>
-              <div className="w-16 h-1 bg-primary mt-5"></div>
-            </div>
-            <p className="text-gray-500 text-sm max-w-md mt-4 md:mt-0 leading-relaxed font-light">
-              Every item is guaranteed 100% genuine, backed by official warranty certificates and custom enterprise co-branding.
-            </p>
+        {/* Subtle Ambient Golden Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-200/20 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-300 bg-amber-50 text-amber-900 font-bold tracking-[0.25em] uppercase text-xs mb-4 backdrop-blur-md shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>Authorized Corporate Distribution</span>
           </div>
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-950 tracking-tight">
+            Premier Brand <span className="bg-gradient-to-r from-amber-700 via-primary to-amber-600 bg-clip-text text-transparent italic">Partners</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-amber-400 to-primary mx-auto mt-5 rounded-full"></div>
+          <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mt-4 font-light leading-relaxed">
+            Click on any brand logo to explore official merchandise, custom corporate branding & volume tariff cards.
+          </p>
         </div>
 
-        {/* Continuous Animated Track - Zero Side Blend Overlays, Zero Scrollbars */}
-        <div className="w-full overflow-hidden">
-          <div className="animate-brand-slide flex gap-6">
-            {[...dynamicBrandPartners, ...dynamicBrandPartners].map((brand, idx) => {
-              const matchingProducts = (products || []).filter(p => matchesBrand(p, brand.title));
-              const brandCount = matchingProducts.length || brand.defaultCount;
-              if (matchingProducts.length === 0 && (brand.title === "Puma" || brand.title === "Nike")) return null;
+        {/* Sliding Tracks with Soft Gradient Fade on Edges */}
+        <div className="relative overflow-hidden space-y-5">
+          <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/90 to-transparent z-20 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/90 to-transparent z-20 pointer-events-none"></div>
 
-              // Extract real product image from actual imported database products
-              let prodWithImg = null;
-              if (brand.preferredSku) {
-                prodWithImg = matchingProducts.find(p => p.sku === brand.preferredSku && p.images && p.images.length > 0);
-              }
-              if (!prodWithImg && brand.preferredFilter) {
-                prodWithImg = matchingProducts.find(p => brand.preferredFilter(p) && p.images && p.images.length > 0);
-              }
-              if (!prodWithImg) {
-                prodWithImg = matchingProducts.find(p => p.images && p.images.length > 0 && p.images[0]);
-              }
-
-              const realImg = prodWithImg?.images?.[0] || brand.fallbackImg || ('https://via.placeholder.com/400?text=' + encodeURIComponent(brand.title));
-
-              return (
-                <Link 
-                  to={`/shop?brand=${encodeURIComponent(brand.title)}`} 
-                  key={`${brand.title}-${idx}`} 
-                  className="group rounded-2xl overflow-hidden bg-white border border-gray-200/90 hover:border-primary shadow-sm hover:shadow-[0_16px_36px_rgba(203,152,52,0.18)] transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col h-[340px] w-[280px] sm:w-[315px] shrink-0 select-none cursor-pointer"
-                >
-                  {/* Clean Canvas for REAL Product Photo */}
-                  <div className="relative h-56 w-full p-4 bg-gradient-to-b from-gray-50 to-gray-100/60 flex items-center justify-center overflow-hidden">
-                    <img 
-                      src={realImg} 
-                      alt={`${brand.title} Corporate Gifting Product`} 
-                      className={`${brand.zoomClass || 'max-h-full max-w-full object-contain group-hover:scale-108'} transition-transform duration-700 drop-shadow-sm select-none pointer-events-none`} 
-                      onError={(e) => { 
-                        if (brand.fallbackImg && e.target.src !== brand.fallbackImg) {
-                          e.target.src = brand.fallbackImg;
-                        } else {
-                          e.target.src = 'https://via.placeholder.com/400?text=' + encodeURIComponent(brand.title);
-                        }
-                      }}
-                    />
-                    
-                    {/* Top Badges */}
-                    <div className="absolute top-3 left-3 z-10">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-dark bg-white/95 px-2.5 py-1 rounded-full border border-gray-200/90 shadow-xs backdrop-blur-sm">
-                        <BrandLogo brand={brand.title} size="xs" />
-                        <span>{brand.title}</span>
-                      </span>
-                    </div>
-                    <div className="absolute top-3 right-3 z-10">
-                      <span className="text-gray-700 text-[11px] font-bold bg-white/95 px-2.5 py-1 rounded-full border border-gray-200 shadow-xs backdrop-blur-sm">
-                        {brandCount} Products
-                      </span>
-                    </div>
+          {/* Row 1: Sliding Left (User Added Brands - Set 1) */}
+          <div className="animate-brand-track-left flex gap-5">
+            {[...row1Brands, ...row1Brands, ...row1Brands, ...row1Brands].map((brand, idx) => (
+              <Link
+                key={`b1-${brand.title}-${idx}`}
+                to={`/shop?brand=${encodeURIComponent(brand.title)}`}
+                className="group w-[230px] sm:w-[260px] h-[100px] bg-white rounded-2xl border border-gray-200/90 hover:border-amber-400 shadow-sm hover:shadow-[0_12px_28px_rgba(203,152,52,0.18)] p-4 flex items-center justify-between shrink-0 transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none"
+                title={`View ${brand.title} Products`}
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-xl bg-[#faf8f5] group-hover:bg-amber-50/80 border border-amber-200/60 flex items-center justify-center text-gray-900 group-hover:text-primary transition-colors shrink-0 shadow-2xs">
+                    <BrandLogo brand={brand.title} size="lg" />
                   </div>
-
-                  {/* Executive Dark Card Base */}
-                  <div className="p-5 flex-grow flex items-center justify-between bg-[#0e1117] text-white border-t border-white/10 group-hover:bg-[#141822] transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className="shrink-0 text-amber-300">
-                        <BrandLogo brand={brand.title} size="md" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-amber-300 font-semibold uppercase tracking-wider mb-0.5">
-                          {brand.categoryNote}
-                        </div>
-                        <h3 className="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-primary transition-colors tracking-wide">
-                          {brand.title}
-                        </h3>
-                      </div>
-                    </div>
-                    <span className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-primary text-white group-hover:text-dark flex items-center justify-center transition-all duration-300 shrink-0">
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  <div>
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-gray-900 group-hover:text-primary transition-colors tracking-wide leading-tight">
+                      {brand.title}
+                    </h3>
+                    <span className="text-[10px] text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 inline-block mt-1">
+                      {brand.count} Products
                     </span>
                   </div>
-                </Link>
-              );
-            })}
+                </div>
+                <span className="w-8 h-8 rounded-full bg-gray-50 group-hover:bg-primary text-gray-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-2xs">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Row 2: Sliding Right (User Added Brands - Set 2) */}
+          <div className="animate-brand-track-right flex gap-5">
+            {[...row2Brands, ...row2Brands, ...row2Brands, ...row2Brands].map((brand, idx) => (
+              <Link
+                key={`b2-${brand.title}-${idx}`}
+                to={`/shop?brand=${encodeURIComponent(brand.title)}`}
+                className="group w-[230px] sm:w-[260px] h-[100px] bg-white rounded-2xl border border-gray-200/90 hover:border-amber-400 shadow-sm hover:shadow-[0_12px_28px_rgba(203,152,52,0.18)] p-4 flex items-center justify-between shrink-0 transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none"
+                title={`View ${brand.title} Products`}
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-xl bg-[#faf8f5] group-hover:bg-amber-50/80 border border-amber-200/60 flex items-center justify-center text-gray-900 group-hover:text-primary transition-colors shrink-0 shadow-2xs">
+                    <BrandLogo brand={brand.title} size="lg" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-gray-900 group-hover:text-primary transition-colors tracking-wide leading-tight">
+                      {brand.title}
+                    </h3>
+                    <span className="text-[10px] text-amber-800 font-semibold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60 inline-block mt-1">
+                      {brand.count} Products
+                    </span>
+                  </div>
+                </div>
+                <span className="w-8 h-8 rounded-full bg-gray-50 group-hover:bg-primary text-gray-400 group-hover:text-white flex items-center justify-center transition-all duration-300 shrink-0 shadow-2xs">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 mt-8 text-center">
-          <div className="inline-flex items-center gap-2 text-xs text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 mt-8 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 text-xs text-gray-500">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-            <span>Hover on any brand card to pause and explore collections</span>
+            <span>Click any brand logo to view all official corporate styles & volume pricing</span>
           </div>
         </div>
       </section>
 
       {/* 5. Separate Sliding Client Brand Logos Showcase */}
-      <section className="py-24 bg-[#0d0f16] text-white overflow-hidden relative border-y border-white/10">
+      <section className="py-24 bg-gradient-to-b from-[#f9f7f2] via-[#fbf9f5] to-white text-gray-900 overflow-hidden relative border-y border-amber-200/50">
         <style>{`
           @keyframes clientScrollLeft {
             0% { transform: translateX(0); }
@@ -558,23 +540,23 @@ const Home = () => {
         `}</style>
 
         {/* Subtle Ambient light */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-amber-200/25 rounded-full blur-[150px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-14 text-center">
-          <span className="text-amber-300 font-bold text-xs tracking-[0.25em] uppercase block mb-3">
+          <span className="text-amber-800 font-bold text-xs tracking-[0.25em] uppercase block mb-3">
             ✦ Premier Corporate Relationships
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-wide">Our Clients</h2>
-          <div className="w-16 h-1 bg-primary mx-auto mt-5"></div>
-          <p className="text-gray-400 text-sm max-w-2xl mx-auto mt-4 font-light leading-relaxed">
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-950 tracking-wide">Our Clients</h2>
+          <div className="w-16 h-1 bg-primary mx-auto mt-5 rounded-full"></div>
+          <p className="text-gray-600 text-sm max-w-2xl mx-auto mt-4 font-light leading-relaxed">
             Trusted corporate gifting partner to 30+ multinational leaders, engineering conglomerates, and Fortune enterprises.
           </p>
         </div>
 
         {/* Sliding Tracks Container with Soft Fade Edges */}
         <div className="relative overflow-hidden space-y-6">
-          <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-[#0d0f16] via-[#0d0f16]/90 to-transparent z-20 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-[#0d0f16] via-[#0d0f16]/90 to-transparent z-20 pointer-events-none"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-[#f9f7f2] via-[#f9f7f2]/90 to-transparent z-20 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-[#f9f7f2] via-[#f9f7f2]/90 to-transparent z-20 pointer-events-none"></div>
 
           {/* Row 1: Sliding Left (Clients 1 to 16) */}
           <div className="animate-clients-left flex gap-5">
@@ -615,7 +597,7 @@ const Home = () => {
             ].map((client, idx) => (
               <div 
                 key={`r1-${client.id}-${idx}`}
-                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-md hover:shadow-2xl border border-white/20 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
+                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-200/90 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
                 title={client.name}
               >
                 <img 
@@ -665,7 +647,7 @@ const Home = () => {
             ].map((client, idx) => (
               <div 
                 key={`r2-${client.id}-${idx}`}
-                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-md hover:shadow-2xl border border-white/20 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
+                className="w-[195px] h-[86px] bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-200/90 hover:border-amber-400 p-3 flex flex-col items-center justify-center shrink-0 transition-all duration-300 group hover:-translate-y-1 cursor-pointer"
                 title={client.name}
               >
                 <img 
@@ -683,7 +665,7 @@ const Home = () => {
         <div className="flex justify-center mt-14 relative z-10">
           <a 
             href="#enquire" 
-            className="group flex items-center gap-3 bg-gradient-to-r from-amber-200 via-primary to-amber-500 hover:from-white hover:to-white text-dark font-bold text-xs uppercase tracking-widest px-10 py-4 rounded-full transition-all duration-300 shadow-[0_4px_25px_rgba(203,152,52,0.35)] hover:-translate-y-1"
+            className="group flex items-center gap-3 bg-gradient-to-r from-amber-500 via-primary to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-xs uppercase tracking-widest px-10 py-4 rounded-full transition-all duration-300 shadow-[0_6px_25px_rgba(203,152,52,0.35)] hover:-translate-y-1"
           >
             <span>Partner With Impressions For Corporate Gifting</span> 
             <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
@@ -695,51 +677,51 @@ const Home = () => {
       <section className="py-24 bg-white text-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <span className="text-primary font-bold text-xs tracking-[0.25em] uppercase block mb-3">The Concierge Standard</span>
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold">The Impressions Advantage</h2>
-            <div className="w-16 h-1 bg-primary mx-auto mt-5"></div>
-            <p className="text-gray-500 max-w-xl mx-auto mt-4 text-sm leading-relaxed">
+            <span className="text-amber-800 font-bold text-xs tracking-[0.25em] uppercase block mb-3">The Concierge Standard</span>
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-950">The Impressions Advantage</h2>
+            <div className="w-16 h-1 bg-primary mx-auto mt-5 rounded-full"></div>
+            <p className="text-gray-600 max-w-xl mx-auto mt-4 text-sm leading-relaxed">
               Elevating corporate gifting from transactional orders into high-touch relationship management.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
             
-            <div className="p-8 rounded-2xl bg-gray-50/80 border border-gray-200 hover:border-primary transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
-              <div className="w-14 h-14 rounded-xl bg-dark text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-2xl bg-[#faf8f5] border border-amber-200/70 hover:border-amber-400 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
+              <div className="w-14 h-14 rounded-xl bg-amber-100/80 border border-amber-200/80 text-amber-800 group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
                 <Gift className="w-7 h-7" />
               </div>
-              <h3 className="font-serif text-xl font-bold mb-3">Precision Co-Branding</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-3">Precision Co-Branding</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Precision UV printing, debossing, hot-foil stamping, and laser engraving matching exact pantone guidelines.
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-gray-50/80 border border-gray-200 hover:border-primary transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
-              <div className="w-14 h-14 rounded-xl bg-dark text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-2xl bg-[#faf8f5] border border-amber-200/70 hover:border-amber-400 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
+              <div className="w-14 h-14 rounded-xl bg-amber-100/80 border border-amber-200/80 text-amber-800 group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
                 <Award className="w-7 h-7" />
               </div>
-              <h3 className="font-serif text-xl font-bold mb-3">Guaranteed Provenance</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-3">Guaranteed Provenance</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Authorized corporate distribution ensuring 100% genuine products with manufacturer warranty certificates.
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-gray-50/80 border border-gray-200 hover:border-primary transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
-              <div className="w-14 h-14 rounded-xl bg-dark text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-2xl bg-[#faf8f5] border border-amber-200/70 hover:border-amber-400 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
+              <div className="w-14 h-14 rounded-xl bg-amber-100/80 border border-amber-200/80 text-amber-800 group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
                 <ShieldCheck className="w-7 h-7" />
               </div>
-              <h3 className="font-serif text-xl font-bold mb-3">Bespoke Unboxing</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-3">Bespoke Unboxing</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Rigid magnetic-closure presentation cases, custom satin ribbon pulls, and personalized wax-sealed greeting cards.
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl bg-gray-50/80 border border-gray-200 hover:border-primary transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
-              <div className="w-14 h-14 rounded-xl bg-dark text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div className="p-8 rounded-2xl bg-[#faf8f5] border border-amber-200/70 hover:border-amber-400 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg">
+              <div className="w-14 h-14 rounded-xl bg-amber-100/80 border border-amber-200/80 text-amber-800 group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
                 <Truck className="w-7 h-7" />
               </div>
-              <h3 className="font-serif text-xl font-bold mb-3">White-Glove Logistics</h3>
+              <h3 className="font-serif text-xl font-bold text-gray-900 mb-3">White-Glove Logistics</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Individual address dropshipping directly to CXO homes or bulk consolidated dispatch to corporate headquarters.
               </p>
@@ -747,31 +729,197 @@ const Home = () => {
 
           </div>
 
-          {/* VIP Direct Concierge Banner */}
-          <div className="rounded-2xl p-8 sm:p-12 bg-gradient-to-r from-[#0c0e14] via-[#141824] to-[#0c0e14] text-white flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10 shadow-2xl">
+          {/* VIP Direct Concierge Banner - Warm Luxury Light Aesthetic */}
+          <div className="rounded-2xl p-8 sm:p-12 bg-gradient-to-r from-[#fcf9f2] via-[#f7f2e5] to-[#f4ede0] text-gray-900 flex flex-col md:flex-row items-center justify-between gap-8 border border-amber-300/80 shadow-[0_16px_40px_rgba(203,152,52,0.12)]">
             <div className="max-w-xl">
-              <span className="text-primary font-bold text-xs uppercase tracking-widest block mb-2">Dedicated B2B Desk</span>
-              <h4 className="font-serif text-2xl sm:text-3xl font-bold mb-2">Planning an Annual Summit or Executive Retreat?</h4>
-              <p className="text-gray-400 text-sm">
+              <span className="text-amber-800 font-bold text-xs uppercase tracking-widest block mb-2">Dedicated B2B Desk</span>
+              <h4 className="font-serif text-2xl sm:text-3xl font-bold text-gray-950 mb-2">Planning an Annual Summit or Executive Retreat?</h4>
+              <p className="text-gray-600 text-sm">
                 Speak directly with our senior corporate gifting consultant for bespoke curation, mockups, and priority SLAs.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <a 
-                href="https://wa.me/917620872092?text=Hello%20Impressions%20Team,%20I%20have%20an%20urgent%20corporate%20summit%20gifting%20requirement."
+                href="https://wa.me/917620872092?text=Hello%20Impressions%20Team,%20I%20have%20an%20urgent%20corporate%20summit%20gifting%20requirement." 
                 target="_blank" 
                 rel="noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-green-600 hover:bg-green-700 font-bold text-xs uppercase tracking-wider text-white transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 font-bold text-xs uppercase tracking-wider text-white transition-colors shadow-md"
               >
                 <span>WhatsApp Consultant</span>
               </a>
               <a 
                 href="tel:+917620872092"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 font-bold text-xs uppercase tracking-wider text-white transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-white hover:bg-amber-50/80 border border-amber-300 font-bold text-xs uppercase tracking-wider text-gray-800 transition-colors shadow-xs"
               >
                 <span>Call +91 76208 72092</span>
               </a>
             </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 8. Curate Your Perfect Corporate Gift - Dedicated Executive RFQ Section */}
+      <section className="py-20 bg-gradient-to-b from-[#fdfbf7] via-[#f7f2e7] to-[#ede3d1] border-t border-amber-200/80 text-gray-900" id="enquire">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold uppercase tracking-widest mb-3">
+              Executive B2B Procurement Desk
+            </span>
+            <h2 className="font-serif text-3xl sm:text-5xl font-bold text-gray-950 tracking-tight">
+              Curate Your Perfect Corporate Gift
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-relaxed">
+              Fill out the requisition form below. Our senior gifting consultants will share custom branding mockups, sample boxes, and volume rate cards within 2 business hours.
+            </p>
+            <div className="mt-3 text-sm text-gray-700 font-medium">
+              <span>Direct Phone Support: </span>
+              <a href="tel:+917620872092" className="font-bold text-[#942024] hover:underline">
+                +91 76208 72092
+              </a>
+              <span className="mx-2 text-gray-400">|</span>
+              <a 
+                href="https://wa.me/917620872092?text=Hello%20Impressions%20Team,%20I%20have%20an%20urgent%20corporate%20gifting%20requirement." 
+                target="_blank" 
+                rel="noreferrer" 
+                className="font-bold text-emerald-700 hover:underline"
+              >
+                Instant WhatsApp Desk
+              </a>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(203,152,52,0.18)] border border-amber-200 p-8 sm:p-12">
+            <form 
+              onSubmit={(e) => { 
+                e.preventDefault(); 
+                const fd = new FormData(e.target);
+                const name = fd.get('name') || '';
+                const company = fd.get('company') || '';
+                const email = fd.get('email') || '';
+                const phone = fd.get('phone') || '';
+                const quantity = fd.get('quantity') || 'Not specified';
+                const topic = activeBanner?.enquiryTopic || 'Corporate & Festive Gifting';
+                const message = encodeURIComponent(
+                  `Hello Impressions Executive Team,\n\nI would like to curate corporate gifts:\n\n• Full Name: ${name}\n• Organization: ${company}\n• Work Email: ${email}\n• Contact: +91 ${phone}\n• Quantity Required: ${quantity}\n• Requirement: ${topic}\n\nPlease share your curated corporate catalog, mockups, and volume pricing.`
+                );
+                window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
+              }} 
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs uppercase tracking-wider font-bold text-gray-700 mb-2">
+                    Executive Full Name *
+                  </label>
+                  <input 
+                    name="name" 
+                    required 
+                    type="text" 
+                    placeholder="e.g. Rahul Sharma" 
+                    className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#942024] focus:bg-white text-gray-900 text-sm placeholder-gray-400 transition-colors shadow-2xs" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-wider font-bold text-gray-700 mb-2">
+                    Company / Enterprise *
+                  </label>
+                  <input 
+                    name="company" 
+                    required 
+                    type="text" 
+                    placeholder="e.g. Deloitte India / Tata Steel" 
+                    className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#942024] focus:bg-white text-gray-900 text-sm placeholder-gray-400 transition-colors shadow-2xs" 
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs uppercase tracking-wider font-bold text-gray-700 mb-2">
+                    Work Email *
+                  </label>
+                  <input 
+                    name="email" 
+                    required 
+                    type="email" 
+                    placeholder="name@company.com" 
+                    className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#942024] focus:bg-white text-gray-900 text-sm placeholder-gray-400 transition-colors shadow-2xs" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-wider font-bold text-gray-700 mb-2">
+                    Contact Phone Number *
+                  </label>
+                  <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl focus-within:border-[#942024] focus-within:bg-white transition-colors">
+                    <span className="px-3.5 text-xs font-bold text-gray-600 border-r border-gray-200 select-none">
+                      IN 🇮🇳 +91
+                    </span>
+                    <input 
+                      name="phone" 
+                      required 
+                      type="tel" 
+                      placeholder="98765 43210" 
+                      className="flex-1 px-4 py-3.5 bg-transparent focus:outline-none text-gray-900 text-sm placeholder-gray-400" 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-bold text-gray-700 mb-2">
+                  Estimated Gift Quantity *
+                </label>
+                <select 
+                  name="quantity" 
+                  required 
+                  defaultValue="" 
+                  className="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#942024] focus:bg-white text-gray-900 text-sm transition-colors cursor-pointer" 
+                >
+                  <option value="" disabled>Select Quantity Range Required</option>
+                  <option value="25 - 50 Units">25 - 50 Units (Boutique Executive Suite)</option>
+                  <option value="50 - 200 Units">50 - 200 Units (Mid-tier Corporate Curation)</option>
+                  <option value="200 - 500 Units">200 - 500 Units (Large Scale Festive Program)</option>
+                  <option value="500+ Units (Enterprise Bulk)">500+ Units (Pan-India Enterprise Delivery)</option>
+                </select>
+              </div>
+
+              <div className="pt-2">
+                <button 
+                  type="submit" 
+                  className="w-full bg-[#942024] hover:bg-[#7a181c] text-white font-bold text-sm py-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl cursor-pointer tracking-widest uppercase flex items-center justify-center gap-2"
+                >
+                  <span>Submit Executive Quotation Request</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="pt-6 border-t border-gray-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <div className="flex flex-col items-center">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 mb-1" />
+                  <span className="text-xs font-semibold text-gray-800">100% Genuine Brands</span>
+                  <span className="text-[11px] text-gray-500">Authorized Distribution</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <Sparkles className="w-5 h-5 text-amber-600 mb-1" />
+                  <span className="text-xs font-semibold text-gray-800">Free Digital Mockups</span>
+                  <span className="text-[11px] text-gray-500">Within 2 Business Hours</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <Truck className="w-5 h-5 text-amber-600 mb-1" />
+                  <span className="text-xs font-semibold text-gray-800">Pan-India Dispatch</span>
+                  <span className="text-[11px] text-gray-500">Consolidated or Individual</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <ShieldCheck className="w-5 h-5 text-emerald-600 mb-1" />
+                  <span className="text-xs font-semibold text-gray-800">GST Input Credit</span>
+                  <span className="text-[11px] text-gray-500">Full Compliance Invoicing</span>
+                </div>
+              </div>
+
+            </form>
           </div>
 
         </div>

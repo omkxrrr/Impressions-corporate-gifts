@@ -65,49 +65,49 @@ const Navbar = () => {
                 </Link>
                 
                 {/* Luxury Dropdown Menu */}
-                <div className="absolute top-full left-0 w-80 bg-[#0c0e14] border border-white/10 rounded-2xl shadow-2xl p-4 hidden group-hover:block z-50">
-                  <div className="text-[10px] uppercase tracking-widest text-amber-300 font-bold px-3 py-1 mb-2 border-b border-white/10 flex items-center justify-between">
+                <div className="absolute top-full left-0 w-84 bg-white/98 backdrop-blur-xl border border-amber-200/80 rounded-2xl shadow-[0_20px_45px_rgba(203,152,52,0.18)] p-4 hidden group-hover:block z-50">
+                  <div className="text-[10px] uppercase tracking-widest text-amber-800 font-bold px-3 py-1 mb-2 border-b border-amber-100 flex items-center justify-between">
                     <span>Apparel Sub-Catalogues</span>
-                    <span className="text-[9px] text-gray-400 font-normal">By Brands</span>
+                    <span className="text-[9px] text-gray-500 font-normal">By Brands</span>
                   </div>
-                  <Link to="/shop?subcatalog=t-shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
-                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                  <Link to="/shop?subcatalog=t-shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 text-amber-800 group-hover/item:bg-white/20 group-hover/item:border-white/30 group-hover/item:text-white transition-colors">
                       <Shirt className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-bold">T-Shirts & Polos</div>
-                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Jack & Jones, Scott International, Reebok, Rare Rabbit</div>
+                      <div className="font-bold text-gray-900 group-hover/item:text-white">T-Shirts & Polos</div>
+                      <div className="text-[10px] text-gray-500 group-hover/item:text-amber-100">Jack & Jones, Scott International, Reebok, Rare Rabbit</div>
                     </div>
                   </Link>
-                  <Link to="/shop?subcatalog=shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
-                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                  <Link to="/shop?subcatalog=shirts" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 text-amber-800 group-hover/item:bg-white/20 group-hover/item:border-white/30 group-hover/item:text-white transition-colors">
                       <Briefcase className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-bold">Formal & Oxford Shirts</div>
-                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Rare Rabbit, Monte Carlo, Arrow</div>
+                      <div className="font-bold text-gray-900 group-hover/item:text-white">Formal & Oxford Shirts</div>
+                      <div className="text-[10px] text-gray-500 group-hover/item:text-amber-100">Rare Rabbit, Monte Carlo, Arrow</div>
                     </div>
                   </Link>
-                  <Link to="/shop?subcatalog=pants" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
-                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                  <Link to="/shop?subcatalog=pants" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 text-amber-800 group-hover/item:bg-white/20 group-hover/item:border-white/30 group-hover/item:text-white transition-colors">
                       <Activity className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-bold">Pants & Tracksuits</div>
-                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Monte Carlo, Adidas, Puma</div>
+                      <div className="font-bold text-gray-900 group-hover/item:text-white">Pants & Tracksuits</div>
+                      <div className="text-[10px] text-gray-500 group-hover/item:text-amber-100">Monte Carlo, Adidas, Puma</div>
                     </div>
                   </Link>
-                  <Link to="/shop?subcatalog=jackets" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-200 hover:text-dark hover:bg-gradient-to-r hover:from-amber-200 hover:to-primary transition-all group/item">
-                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0 text-amber-300 group-hover/item:text-dark">
+                  <Link to="/shop?subcatalog=jackets" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-800 hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 transition-all group/item">
+                    <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 text-amber-800 group-hover/item:bg-white/20 group-hover/item:border-white/30 group-hover/item:text-white transition-colors">
                       <ShieldCheck className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="font-bold">Jackets & Outerwear</div>
-                      <div className="text-[10px] text-gray-400 group-hover/item:text-gray-800">Reebok, Rare Rabbit, Jack & Jones</div>
+                      <div className="font-bold text-gray-900 group-hover/item:text-white">Jackets & Outerwear</div>
+                      <div className="text-[10px] text-gray-500 group-hover/item:text-amber-100">Reebok, Rare Rabbit, Jack & Jones</div>
                     </div>
                   </Link>
-                  <div className="border-t border-white/10 mt-2 pt-2">
-                    <Link to="/shop" className="block text-center text-xs font-bold text-amber-300 hover:underline py-1">
+                  <div className="border-t border-amber-100 mt-2 pt-2">
+                    <Link to="/shop" className="block text-center text-xs font-bold text-amber-800 hover:text-primary py-1">
                       View Full Corporate Catalog (400+) →
                     </Link>
                   </div>
