@@ -6,6 +6,7 @@ import { useProducts } from '../context/ProductContext';
 import { Truck, ShieldCheck, Gift, Star, ArrowRight, Award, CheckCircle2, PhoneCall, Sparkles, Shirt, Briefcase, Activity, Layers, ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 import { matchesBrand, detectBrand, matchesSubCatalog } from '../utils/catalogCategories';
 import { getHeroBanners, DEFAULT_BANNERS } from '../services/bannerService';
+import { trackLead } from '../utils/metaPixel';
 
 const Home = () => {
   const { products } = useProducts();
@@ -839,6 +840,8 @@ const Home = () => {
                 const message = encodeURIComponent(
                   `Hello Impressions Executive Team,\n\nI would like to curate corporate gifts:\n\n• Full Name: ${name}\n• Organization: ${company}\n• Work Email: ${email}\n• Contact: +91 ${phone}\n• Quantity Required: ${quantity}\n• Requirement: ${topic}\n\nPlease share your curated corporate catalog, mockups, and volume pricing.`
                 );
+                // Fire Meta Pixel Lead event for corporate quotation requests
+                trackLead('Executive Quotation Request', { company, quantity, topic });
                 window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
               }} 
               className="space-y-6"

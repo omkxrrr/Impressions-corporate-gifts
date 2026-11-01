@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { trackAddToCart } from '../utils/metaPixel';
 
 const CartContext = createContext();
 
@@ -15,6 +16,9 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product, quantity = 1) => {
+    // Fire Meta Pixel AddToCart event
+    trackAddToCart(product, quantity);
+
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {

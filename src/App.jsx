@@ -19,11 +19,14 @@ import AdminImport from './pages/admin/AdminImport';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminBanners from './pages/admin/AdminBanners';
 import AdminLogin from './pages/admin/AdminLogin';
+import AdminSettings from './pages/admin/AdminSettings';
 import AdminRoute from './components/AdminRoute';
+import MetaPixelTracker from './components/MetaPixelTracker';
 
 function App() {
   return (
     <Router>
+      <MetaPixelTracker />
       <Routes>
         {/* Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -57,7 +60,7 @@ function App() {
             <Route path="products/edit/:id" element={<ProductForm />} />
             <Route path="orders" element={<AdminOrders />} />
             <Route path="banners" element={<AdminBanners />} />
-            <Route path="settings" element={<div className="p-8 bg-white rounded-lg shadow-sm border text-center">Settings coming soon...</div>} />
+            <Route path="settings" element={<AdminSettings />} />
           </Route>
         </Route>
 

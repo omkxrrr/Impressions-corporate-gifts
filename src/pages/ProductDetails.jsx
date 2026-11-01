@@ -7,6 +7,7 @@ import { Star, Truck, ArrowLeft, Shield, RefreshCw, Heart, ChevronRight, Sparkle
 import ProductCard from '../components/ProductCard';
 import { BrandLogo, BrandCornerBadge } from '../components/BrandLogo';
 import { detectBrand } from '../utils/catalogCategories';
+import { trackViewContent } from '../utils/metaPixel';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -31,6 +32,8 @@ const ProductDetails = () => {
       if (found) {
         setProduct(found);
         setMainImage(found.images[0]);
+        // Fire Meta Pixel ViewContent event
+        trackViewContent(found);
         // Find related products (same category, excluding current)
         const related = products.filter(p => p.category === found.category && p.id !== found.id).slice(0, 4);
         // If not enough related, just add some popular ones

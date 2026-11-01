@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { CheckCircle } from 'lucide-react';
 import { API_URL } from '../config';
+import { trackInitiateCheckout, trackPurchase } from '../utils/metaPixel';
 
 const Checkout = () => {
   const { cart, getCartTotal, clearCart } = useCart();
@@ -19,6 +20,13 @@ const Checkout = () => {
     state: '',
     pincode: ''
   });
+
+  // Track Meta Pixel InitiateCheckout event when checkout page loads with items
+  useEffect(() => {
+    if (cart.length > 0) {
+      trackInitiateCheckout(cart, getCartTotal());
+    }
+  }, []);
 
   if (cart.length === 0 && !isPlaced && !isSubmitting) {
     navigate('/cart');
@@ -61,6 +69,9 @@ const Checkout = () => {
       const message = encodeURIComponent(`Hello Impressions, I would like to place an order request.\n\n*Customer Details:*\nName: ${formData.name}\nMobile: ${formData.mobile}\nEmail: ${formData.email}\n\n*Delivery Address:*\n${fullAddress}\n\n*Order Summary:*\n${itemsText}\n\nPlease review and get back to me.`);
       window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
 
+      // Fire Meta Pixel Purchase event
+      trackPurchase(orderPayload, getCartTotal(), cart);
+
       setIsPlaced(true);
       clearCart();
     } catch (err) {
@@ -71,6 +82,9 @@ const Checkout = () => {
       const message = encodeURIComponent(`Hello Impressions, I would like to place an order request.\n\n*Customer Details:*\nName: ${formData.name}\nMobile: ${formData.mobile}\nEmail: ${formData.email}\n\n*Delivery Address:*\n${fullAddress}\n\n*Order Summary:*\n${itemsText}\n\nPlease review and get back to me.`);
       window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
       
+      // Fire Meta Pixel Purchase event
+      trackPurchase({ customerName: formData.name }, getCartTotal(), cart);
+
       setIsPlaced(true);
       clearCart();
     } finally {

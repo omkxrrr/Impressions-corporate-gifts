@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { trackLead } from '../utils/metaPixel';
 
 const Contact = () => {
   return (
@@ -47,6 +48,7 @@ const Contact = () => {
               e.preventDefault(); 
               const fd = new FormData(e.target);
               const message = encodeURIComponent(`Hello Impressions,\n\nName: ${fd.get('name')}\nEmail: ${fd.get('email')}\nPhone: ${fd.get('phone')}\n\nMessage:\n${fd.get('message')}`);
+              trackLead('Contact Form Submission', { name: fd.get('name'), email: fd.get('email') });
               window.open(`https://wa.me/917620872092?text=${message}`, '_blank');
             }}>
               <div className="space-y-6">
